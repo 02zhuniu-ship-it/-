@@ -1,0 +1,46 @@
+name: 每日竞品采集
+
+on:
+  schedule:
+    # 北京时间每天 00:05 = UTC 16:05 (前一天)
+    - cron: "5 16 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  daily-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 安装依赖与中文字体
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+          pip install --quiet requests Pillow python-pptx
+
+      - name: 运行全流程（真实采集）
+        env:
+          TZ: Asia/Shanghai
+        run: |
+          cd scripts
+          python run_all.py
+
+      - name: 提交归档到云端仓库
+        run: |
+          git config user.name "auto-bot"
+          git config user.email "auto-bot@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "每日竞品采集归档 $(date +%Y-%m-%d)"
+          git push

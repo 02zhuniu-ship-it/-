@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人工作台 · 电商竞品自动分析</title>
+<style>
+  :root{
+    --bg:#f5f1f0; --card:#fcf9f8; --nested:#f8f3f2; --line:#e7e0de;
+    --text:#3a3434; --sub:#7a6e6e; --weak:#9c9090;
+    --accent:#a06b6b; --accent-muted:#f0e6e6; --on:#fcf9f8;
+    --taobao:#c47046; --xianyu:#4a9a7a; --danger:#b0564f; --ok:#4a8f6a;
+    --r-sm:10px; --r-md:16px; --r-lg:24px;
+    --shadow:0 6px 24px rgba(58,52,52,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6}
+  .wrap{max-width:1080px;margin:0 auto;padding:20px 18px 80px}
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+  header h1{font-size:20px} header .date{color:var(--sub);font-size:13px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
+  .card h2{font-size:16px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .pill{font-size:12px;padding:2px 10px;border-radius:99px;background:var(--accent-muted);color:var(--accent)}
+  .chip{display:inline-flex;font-size:12px;padding:2px 9px;border-radius:99px;margin-right:6px}
+  .chip.ok{background:#e9f4ed;color:var(--ok)} .chip.fail{background:#fbe def} .chip.fail{background:#fbeeec;color:var(--danger)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .stat{background:var(--nested);border:1px solid var(--line);border-radius:var(--r-md);padding:14px;text-align:center}
+  .stat .num{font-size:26px;font-weight:700} .stat .lab{font-size:12px;color:var(--sub);margin-top:2px}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)}
+  .row:last-child{border-bottom:none} .row .t{color:var(--sub)} .row .v{font-weight:600}
+  button.primary{background:var(--accent);color:var(--on);border:none;border-radius:var(--r-sm);padding:10px 18px;font-size:14px;cursor:pointer}
+  button.ghost{background:transparent;border:1px solid var(--line);color:var(--sub);border-radius:var(--r-sm);padding:6px 12px;cursor:pointer;font-size:12px}
+  .section-title{display:flex;align-items:center;justify-content:space-between;margin:24px 0 12px}
+  .section-title h3{font-size:15px}
+  .day-group{margin-bottom:18px}
+  .day-head{font-size:15px;font-weight:700;margin-bottom:8px}
+  .tree{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+  .file-item{background:var(--nested);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .file-item .nm{font-size:12px;color:var(--text);word-break:break-all}
+  .file-item .meta{font-size:11px;color:var(--weak)}
+  .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#2b2524;color:#fff;padding:10px 20px;border-radius:99px;font-size:13px;opacity:0;transition:.3s;z-index:99;pointer-events:none}
+  .toast.show{opacity:1}
+  .empty{color:var(--weak);font-size:13px;padding:16px;text-align:center}
+  .loading{color:var(--sub);font-size:13px}
+  .seg{cursor:pointer}
+  a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><h1>📊 个人工作台</h1><div class="date">电商竞品自动采集 · 云端归档</div></div>
+    <div class="date" id="today"></div>
+  </header>
+
+  <div id="app">
+    <div class="card"><div class="loading">正在从云端读取今日状态…</div></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// 云端数据文件（通过 raw CDN 读取仓库 _system 下索引）。
+// 在 GitHub Pages 上运行时访问的是当前仓库同名的 raw 地址。
+const REPO = "02zhuniu-ship-it";
+const BRANCH = "main";
+// 仓库名是单个连字符，路径形如 ecommerce.../-；这里用通用 raw 前缀，统一以 manifest 为准
+// 工作台 HTML 放在 workbench/ 目录，跳转时以此仓库的数据为准
+const RAW = `https://raw.githubusercontent.com/${REPO}/${BRANCH}`;
+const FILES = ["archive/_system/manifest.json","archive/_system/tasks.json","archive/_system/run_result_2026-09-30.json"];
+
+let manifest={}, tasks=[], result={};
+const today=localStorage.getItem("wb_date")||new Date(Date.now()+8*3600*1000).toISOString().slice(0,10);
+document.getElementById("today").textContent="北京时间 "+today;
+
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2000);}
+function esc(s){return (s||"").replace(/[<>]/g,c=>({"<":"&lt;",">":"&gt;"}[c]));}
+
+async function load(){
+  try{
+    // manifest
+    const m = await (await fetch(`${RAW}/archive/_system/manifest.json`)).json();
+    manifest = m||{};
+  }catch(e){console.warn("manifest",e);}
+  try{
+    const t = await (await fetch(`${RAW}/archive/_system/tasks.json`)).json();
+    tasks = Array.isArray(t)?t:[];
+  }catch(e){console.warn("tasks",e);}
+  render();
+}
+
+function groupOf(date){return manifest[date]||{};}
+
+function render(){
+  const g = groupOf(today);
+  const dates = Object.keys(manifest).sort().reverse();
+  const hasData = dates.length>0;
+
+  // —— 今日状态 ——
+  const tb = (g.taobao||{}), xy=(g.xianyu||{});
+  const todayFiles = countToday();
+  const okFiles = todayFiles.total-(todayFiles.failed||0);
+  let html = '';
+  html += `<div class="card">
+    <h2><span>🌅 今日竞品采集</span> <span class="pill" id="st">读取中</span></h2>`;
+  if(!hasData){
+    html += `<div class="empty">暂无归档数据。系统已配置每天 00:05 自动采集，跑完会自动归档到云端并在此显示。</div></div>`;
+  }else{
+    html += `<div class="grid">
+      <div class="stat"><div class="num">00:05</div><div class="lab">计划执行时间（北京）</div></div>
+      <div class="stat"><div class="num" id="sPri">—</div><div class="lab">状态</div></div>
+      <div class="stat"><div class="num" style="color:var(--taobao)">${countPlat('taobao')}</div><div class="lab">淘宝收录</div></div>
+      <div class="stat"><div class="num" style="color:var(--xianyu)">${countPlat('xianyu')}</div><div class="lab">闲鱼收录</div></div>
+      <div class="stat"><div class="num">${todayFiles.total||0}</div><div class="lab">新增文件</div></div>
+      <div class="stat"><div class="num" style="color:var(--ok)">${okFiles||0}</div><div class="lab">成功文件</div></div>
+      <div class="stat"><div class="num" style="color:var(--danger)">${todayFiles.failed||0}</div><div class="lab">失败文件</div></div>
+    </div>`;
+    html += `<div style="margin-top:16px;text-align:right">
+      <button class="primary" onclick="location.hash='view';goToday()">查看今日资料 →</button>
+    </div></div>`;
+    html += renderTaskLog();
+    html += renderNextRecent(dates);
+  }
+  document.getElementById("app").innerHTML = html;
+  setStatus(hasData);
+}
+
+function setStatus(hasData){
+  const el=document.getElementById("sPri");
+  const st=document.getElementById("st");
+  if(!hasData){ if(st){st.textContent="待首次运行";st.style.background="#eee";} return; }
+  let last=null;
+  // 从 tasks 找最新一条完整任务
+  for(const t of tasks){ if(t && t.task_name && (t.date||t.ts)){ last=t; } }
+  const done = last && (last.uploaded!==undefined || last.success!==undefined || last.generated!==undefined);
+  if(st){st.textContent=done?"已完成":"运行中/待确认";st.className="pill";st.style.background = done?"#e9f4ed":"#fbeeec";st.style.color=done?"#4a8f6a":"#b0564f";}
+  if(el) el.textContent = "已完成";
+}
+
+function renderTaskLog(){
+  let h=`<h2>🤖 自动化任务记录</h2>`;
+  const list=tasks.slice(0,8);
+  if(!list.length){h+=`<div class="empty">暂无任务运行记录</div>`;return `<div class="card">${h}</div>`;}
+  h+=`<div class="row" style="font-size:12px;color:var(--weak)"><span>任务</span><span>日期</span><span>结果</span></div>`;
+  for(const t of list){
+    const name=esc(t.task_name||t.type||"任务");
+    const d=esc(t.date||((t.ts||"").slice(0,10)));
+    const fail=(t.failed&&t.failed>0)?'<span class="chip fail">失败 '+t.failed+'</span>':'<span class="chip ok">成功</span>';
+    h+=`<div class="row"><span class="t">${name}</span><span class="v">${d}</span><span>${fail}</span></div>`;
+  }
+  return `<div class="card">${h}</div>`;
+}
+
+function renderNextRecent(dates){
+  let h=`<div class="section-title"><h3>📁 云端归档（按日期）</h3><span class="date">共 ${dates.length} 天</span></div>`;
+  for(const d of dates.slice(0,6)){
+    h+=`<div class="day-group"><div class="day-head">📆 ${d}</div>`;
+    const g=groupOf(d);
+    const plats=Object.keys(g);
+    if(!plats.length){h+=`<div class="empty">空</div>`;continue;}
+    h+=`<div class="tree">`;
+    for(const plat of plats){
+      const types=Object.keys(g[plat]);
+      let files=[];let total=0;for(const ty of types){total+=g[plat][ty].length;}
+      const color = plat.includes("taobao")?"var(--taobao)":"var(--xianyu)";
+      h+=`<div class="file-item"><div><div class="nm" style="font-weight:600;color:${color}">${esc(plat==='失败记录'?'失败记录':plat)}</div>
+          <div class="meta">${types.map(esc).join(" · ")}</div></div>
+          <span class="chip" style="background:${color}1a;color:${color}">${total}个</span></div>`;
+    }
+    h+=`</div>`;
+    h+=`<div style="text-align:right;margin-top:8px"><a href="#" onclick="return goView('${d}')">查看 ${d} 全部文件 →</a></div>`;
+    h+=`</div>`;
+  }
+  return h;
+}
+
+function countPlat(plat){const g=groupOf(today);const p=g[plat]||{};let n=0;for(const k in p){n+=p[k].length;}return n;}
+function countToday(){
+  const g=groupOf(today); let total=0,failed=0;
+  for(const plat in g){for(const ty in g[plat]){total+=g[plat][ty].length;}}
+  return {total,failed};
+}
+function goToday(){goView(today);}
+function goView(date){
+  const g=groupOf(date); if(!Object.keys(g).length){toast("该日期暂无数据");return false;}
+  let h='<div class="card"><div class="section-title"><h3>📆 '+date+' 全部资料</h3><button class="ghost" onclick="goHome()">← 返回首页</button></div>';
+  for(const plat of Object.keys(g)){
+    const color=plat.includes("taobao")?"var(--taobao)":"var(--xianyu)";
+    h+=`<div style="margin:14px 0 6px"><b style="color:${color}">${esc(plat)}</b></div><div class="tree">`;
+    for(const ty of Object.keys(g[plat])){
+      for(const f of g[plat][ty]){
+        h+=`<div class="file-item"><div><div class="nm">${esc(ty)} · ${esc(f.split("/").pop())}</div>
+            <div class="meta">${esc(f)}</div></div>
+            <button class="ghost seg" onclick="dl('${esc(f)}')">下载</button></div>`;
+      }
+    }
+    h+='</div>';
+  }
+  h+='</div>';
+  document.getElementById("app").innerHTML=h;
+  return false;
+}
+function goHome(){document.getElementById("app").innerHTML='<div class="card"><div class="loading">读取中…</div></div>';render();return false;}
+
+function dl(relPath){
+  const url=`${RAW}/${encodeURI(relPath)}`;
+  const a=document.createElement("a");a.href=url;a.download=relPath.split("/").pop();document.body.appendChild(a);a.click();a.remove();
+  toast("正在下载 "+relPath.split("/").pop());
+}
+function view(){const h=location.hash;if(h.startsWith("#view")){const d=decodeURIComponent(h.replace("#view:",""));if(d)goView(d);}}
+load();window.addEventListener("hashchange",view);
+</script>
+</body>
+</html>
