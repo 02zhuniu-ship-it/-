@@ -1,0 +1,24 @@
+{
+  "actorSpecification": 1,
+  "name": "taobao-xianyu-crawler",
+  "title": "淘宝 / 闲鱼 公开商品采集器",
+  "description": "采集淘宝搜索结果页和闲鱼（2.taobao.com）公开商品列表与详情。内置 Stealth 反爬、住宅代理、JS 渲染。仅采集公开页面可访问的数据，不触发登录态。",
+  "version": "1.0.0",
+  "readme": "README.md",
+  "inputSchema": "INPUT_SCHEMA.json",
+  "dockerfile": "Dockerfile",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "run": {
+    "timeoutSecs": 1800,
+    "memoryMbytes": 2048,
+    "maxCpus": 2
+  },
+  "exampleRunId": "",
+  "proxiesConfiguration": "ACTOR_PROXY_CONFIGURATION",
+  "author": {
+    "name": "ecommerce-watch"
+  },
+  "tags": ["taobao", "xianyu", "shopping", "crawler", "stealth", "puppeteer"]
+}

@@ -1,0 +1,148 @@
+{
+  "title": "淘宝 / 闲鱼 公开商品采集器",
+  "description": "采集淘宝搜索结果页（s.taobao.com）和闲鱼商品列表页（2.taobao.com）的公开数据。本 Actor 仅采集未登录即可看到的公开信息，不绕过任何登录或验证。",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "platform": {
+      "title": "采集平台",
+      "description": "选择要采集的平台。淘宝=天猫+淘宝商城，闲鱼=闲置市场（2.taobao.com）。",
+      "type": "string",
+      "enum": ["taobao", "xianyu"],
+      "default": "taobao"
+    },
+    "keyword": {
+      "title": "搜索关键词",
+      "description": "填入想搜索的关键词，如 '降噪耳机'、'机械键盘'、'二手相机' 等。",
+      "type": "string",
+      "default": "",
+      "editor": "textfield"
+    },
+    "maxPages": {
+      "title": "最大翻页数",
+      "description": "每个任务最多翻多少页。建议 3-10 页，翻太多容易被限流。",
+      "type": "integer",
+      "default": 5,
+      "minimum": 1,
+      "maximum": 50
+    },
+    "maxItems": {
+      "title": "最多采集商品数",
+      "description": "超出后自动停止。0 = 不限制。",
+      "type": "integer",
+      "default": 0,
+      "minimum": 0
+    },
+    "crawlDetail": {
+      "title": "是否进入详情页采集",
+      "description": "开启后会逐个打开商品详情页，采集描述、规格、店铺信息等更完整数据。会显著增加请求量和运行时间。关闭=仅采集列表页可见的简要信息。",
+      "type": "boolean",
+      "default": false
+    },
+    "useStealth": {
+      "title": "开启 Stealth 反爬模式",
+      "description": "注入 stealth 插件，隐藏 Puppeteer 痕迹（navigator.webdriver、chrome 对象等）。强烈建议保持开启。",
+      "type": "boolean",
+      "default": true
+    },
+    "useHumanBehavior": {
+      "title": "模拟真人行为（随机滚动/停顿/鼠标移动）",
+      "description": "在页面上加入随机滚动、鼠标晃动、延迟点击等，降低机器特征。开启后运行时间约增加 30%-60%。",
+      "type": "boolean",
+      "default": true
+    },
+    "requestIntervalSecs": {
+      "title": "请求间隔（秒）",
+      "description": "每个页面请求之间的最小等待时间。数字越大越不容易被限流。建议 1.5-5 秒。",
+      "type": "number",
+      "default": 2.5,
+      "minimum": 0.5,
+      "maximum": 30
+    },
+    "randomIntervalJitterSecs": {
+      "title": "间隔抖动（秒）",
+      "description": "在请求间隔基础上再加减一个随机值，让节奏不固定。例如填 1.0，实际间隔就在 1.5-3.5 秒之间波动。",
+      "type": "number",
+      "default": 1.0,
+      "minimum": 0,
+      "maximum": 10
+    },
+    "pageLoadTimeoutSecs": {
+      "title": "页面加载超时（秒）",
+      "description": "单个页面最多等多久。淘宝/闲鱼首页较重，建议 15-30 秒。",
+      "type": "integer",
+      "default": 20,
+      "minimum": 5,
+      "maximum": 120
+    },
+    "maxConcurrency": {
+      "title": "并发浏览器数",
+      "description": "同时开几个浏览器窗口。数字越高效越快，但也越容易被识别。建议 1-2，绝对不要超过 3。",
+      "type": "integer",
+      "default": 1,
+      "minimum": 1,
+      "maximum": 3
+    },
+    "proxyConfiguration": {
+      "title": "代理服务",
+      "description": "强烈建议使用住宅代理。不配置代理时，所有请求走 Apify 数据中心 IP，淘宝/闲鱼大概率直接风控返回空白页或滑块验证。",
+      "type": "object",
+      "default": {
+        "useApifyProxy": true,
+        "apifyProxyGroups": ["RESIDENTIAL"],
+        "apifyProxyCountry": "CN"
+      },
+      "editor": "proxy"
+    },
+    "customProxyUrls": {
+      "title": "自定义代理列表（可选）",
+      "description": "如果你有自己的住宅代理服务（如 Oxylabs、Smartproxy、国内自建住宅代理池），填在这里。每行一个，格式：http://用户名:密码@IP:端口。留空则只使用上面 Apify 代理。",
+      "type": "string",
+      "default": "",
+      "editor": "textarea"
+    },
+    "taobaoSort": {
+      "title": "淘宝排序方式",
+      "description": "淘宝搜索结果的排序方式。闲鱼不支持此参数。",
+      "type": "string",
+      "enum": ["default", "sales", "priceAsc", "priceDesc"],
+      "default": "default"
+    },
+    "priceMin": {
+      "title": "最低价过滤（元）",
+      "description": "只采价格 >= 此值的商品。0 = 不限。",
+      "type": "number",
+      "default": 0,
+      "minimum": 0
+    },
+    "priceMax": {
+      "title": "最高价过滤（元）",
+      "description": "只采价格 <= 此值的商品。0 = 不限。",
+      "type": "number",
+      "default": 0,
+      "minimum": 0
+    },
+    "onlyInStock": {
+      "title": "仅采集有货商品",
+      "description": "跳过显示 '已下架'、'缺货'、'暂无库存' 的商品。",
+      "type": "boolean",
+      "default": true
+    },
+    "saveScreenshots": {
+      "title": "遇到异常时自动截图",
+      "description": "当页面加载失败、出现滑块验证、或返回空白数据时，自动保存截图到 Storage，方便排查。",
+      "type": "boolean",
+      "default": true
+    },
+    "cookies": {
+      "title": "自定义 Cookie（可选）",
+      "description": "如果你需要采集自己登录后才能看到的数据（如个性化推荐、收藏夹相关），粘贴浏览器里的 Cookie 字符串。注意：本 Actor 默认只采集公开数据，Cookie 仅用于降低识别率，不会采集任何登录态下的私密信息。",
+      "type": "string",
+      "default": "",
+      "editor": "textarea",
+      "sensitive": true
+    }
+  },
+  "required": ["platform", "keyword"],
+  "additionalProperties": false
+}

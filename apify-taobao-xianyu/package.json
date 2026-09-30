@@ -1,0 +1,24 @@
+{
+  "name": "apify-taobao-xianyu",
+  "version": "1.0.0",
+  "description": "Apify Actor - 淘宝 / 闲鱼 公开商品数据采集器（Stealth + 住宅代理 + JS 渲染）",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "dev": "APIFY_LOCAL_EMULATION=1 node src/main.js",
+    "test": "echo \"no tests\" && exit 0"
+  },
+  "dependencies": {
+    "apify": "^3.1.0",
+    "crawlee": "^3.14.0",
+    "puppeteer": "^21.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "ajv": "^8.12.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "ecommerce-watch",
+  "license": "MIT"
+}
