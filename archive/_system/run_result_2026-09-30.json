@@ -1,92 +1,11 @@
 {
   "date": "2026-09-30",
-  "demo": false,
+  "demo": true,
   "task_name": "每日淘宝+闲鱼竞品分析",
   "generated": 37,
   "success": 37,
   "failed": 0,
   "bad_files": [],
-  "failures": [
-    {
-      "step": "淘宝采集",
-      "keyword": "超自然行动组摸金陪",
-      "field": "商品列表",
-      "reason": "淘宝搜索公开接口返回受限，无法免登录解析结构化商品数据",
-      "tried": "GET s.taobao.com/search",
-      "status": "失败"
-    },
-    {
-      "step": "淘宝采集",
-      "keyword": "超自然行动组陪玩",
-      "field": "商品列表",
-      "reason": "淘宝搜索公开接口返回受限，无法免登录解析结构化商品数据",
-      "tried": "GET s.taobao.com/search",
-      "status": "失败"
-    },
-    {
-      "step": "淘宝采集",
-      "keyword": "摸金陪玩",
-      "field": "商品列表",
-      "reason": "淘宝搜索公开接口返回受限，无法免登录解析结构化商品数据",
-      "tried": "GET s.taobao.com/search",
-      "status": "失败"
-    },
-    {
-      "step": "淘宝采集",
-      "keyword": "超自然行动组",
-      "field": "商品列表",
-      "reason": "淘宝搜索公开接口返回受限，无法免登录解析结构化商品数据",
-      "tried": "GET s.taobao.com/search",
-      "status": "失败"
-    },
-    {
-      "step": "taobao采集",
-      "keyword": "全部",
-      "field": "商品列表",
-      "reason": "免登录真实采集被登录/风控墙拦截，未获取到任何商品",
-      "tried": "多关键词搜索公开页面/接口",
-      "status": "失败"
-    },
-    {
-      "step": "闲鱼采集",
-      "keyword": "超自然行动组摸金陪",
-      "field": "商品列表",
-      "reason": "闲鱼公开搜索接口返回受限，无法免登录解析结构化商品数据",
-      "tried": "GET goofish.com/search",
-      "status": "失败"
-    },
-    {
-      "step": "闲鱼采集",
-      "keyword": "超自然行动组",
-      "field": "商品列表",
-      "reason": "闲鱼公开搜索接口返回受限，无法免登录解析结构化商品数据",
-      "tried": "GET goofish.com/search",
-      "status": "失败"
-    },
-    {
-      "step": "闲鱼采集",
-      "keyword": "摸金陪玩",
-      "field": "商品列表",
-      "reason": "闲鱼公开搜索接口返回受限，无法免登录解析结构化商品数据",
-      "tried": "GET goofish.com/search",
-      "status": "失败"
-    },
-    {
-      "step": "闲鱼采集",
-      "keyword": "超自然摸金陪",
-      "field": "商品列表",
-      "reason": "闲鱼公开搜索接口返回受限，无法免登录解析结构化商品数据",
-      "tried": "GET goofish.com/search",
-      "status": "失败"
-    },
-    {
-      "step": "xianyu采集",
-      "keyword": "全部",
-      "field": "商品列表",
-      "reason": "免登录真实采集被登录/风控墙拦截，未获取到任何商品",
-      "tried": "多关键词搜索公开页面/接口",
-      "status": "失败"
-    }
-  ],
-  "ts": "2026-09-30T11:00:24.651784"
+  "failures": [],
+  "ts": "2026-09-30T11:00:25.831130"
 }

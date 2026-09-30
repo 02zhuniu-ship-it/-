@@ -289,24 +289,24 @@
     "size": 144,
     "task": "每日淘宝+闲鱼竞品分析"
   },
-  "13b66e2b0f5a46c9157b1c602100d7d45b27948606d5cd6348deac8d79ff424f": {
+  "a72b7e57ed582be0ec7e0f0d45f5ee481ac5135a96f65a1ad72c69442beab88b": {
     "path": "2026-09-30/taobao/PPT报告/淘宝同行爆款分析-2026-09-30.pptx",
-    "size": 28382,
+    "size": 40402,
     "task": "每日淘宝+闲鱼竞品分析"
   },
-  "ec09b7253925c4442975cebbcc57cae711bb0f62ac5a0420020a19f02c598d47": {
-    "path": "2026-09-30/taobao/数据/data_taobao_search_v2.json",
-    "size": 144,
+  "e5e8dfd633dd911a21747f11e0ceb2d31312d86d48766ebbd3cf69e654300045": {
+    "path": "2026-09-30/taobao/数据/data_taobao_search_v2.latest.json",
+    "size": 9370,
     "task": "每日淘宝+闲鱼竞品分析"
   },
-  "a1db229c79b6ecaa0371b459773cee8320481bf0d28f5c9faf02871e2e491501": {
+  "3afb134908733b760d1c2b1b8a5a087f346392819087a1298469a96f1b81ce91": {
     "path": "2026-09-30/xianyu/PPT报告/闲鱼同行爆款分析-2026-09-30.pptx",
-    "size": 28383,
+    "size": 83437,
     "task": "每日淘宝+闲鱼竞品分析"
   },
-  "ae6f4da19d3ab2bdfc2f4f1aa3ee34dadb23e374ce112e0f0788879070c7a0ae": {
-    "path": "2026-09-30/xianyu/数据/data_xianyu_detail.latest.json",
-    "size": 144,
+  "826bab07d36a497cda168d5481483b6c48614c3a4e7e8477c7d63b1a51f70fda": {
+    "path": "2026-09-30/xianyu/数据/data_xianyu_detail.json",
+    "size": 11798,
     "task": "每日淘宝+闲鱼竞品分析"
   }
 }

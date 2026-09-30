@@ -1,8 +1,289 @@
 {
   "date": "2026-09-30",
   "platform": "taobao",
-  "demo": false,
-  "generated_at": "2026-09-30T11:00:24.373635",
-  "count": 0,
-  "items": []
+  "demo": true,
+  "generated_at": "2026-09-30T11:00:18.247248",
+  "count": 10,
+  "items": [
+    {
+      "is_demo": true,
+      "rank": 1,
+      "title": "[演示] 超自然行动组摸金陪 同行款 1号 摸金陪玩装备",
+      "price": "14.9",
+      "sales": "100",
+      "shop": "演示店铺1",
+      "city": "浙江杭州",
+      "tags": [
+        "演示",
+        "装备包撤离"
+      ],
+      "img_url": "https://picsum.photos/seed/tb11/400/400",
+      "detail_url": "https://example.invalid/demo/taobao/1",
+      "selling_points": [
+        "装备包撤离",
+        "首单免费"
+      ],
+      "fetch_status": "演示数据",
+      "skus": {
+        "status": "待核验",
+        "skus": [],
+        "reason": "详情页为演示地址或无详情链接"
+      },
+      "img_file": "2026-09-30/taobao/商品图片/01_[演示]_超自然行动组摸_主图.jpeg",
+      "img_url_local": "2026-09-30/taobao/商品图片/01_[演示]_超自然行动组摸_主图.jpeg",
+      "img_fetch_note": null
+    },
+    {
+      "is_demo": true,
+      "rank": 2,
+      "title": "[演示] 超自然行动组摸金陪 同行款 2号 摸金陪玩装备",
+      "price": "19.9",
+      "sales": "200",
+      "shop": "演示店铺2",
+      "city": "浙江杭州",
+      "tags": [
+        "演示",
+        "装备包撤离"
+      ],
+      "img_url": "https://picsum.photos/seed/tb22/400/400",
+      "detail_url": "https://example.invalid/demo/taobao/2",
+      "selling_points": [
+        "装备包撤离",
+        "首单免费"
+      ],
+      "fetch_status": "演示数据",
+      "skus": {
+        "status": "待核验",
+        "skus": [],
+        "reason": "详情页为演示地址或无详情链接"
+      },
+      "img_file": "2026-09-30/taobao/商品图片/02_[演示]_超自然行动组摸_主图.jpeg",
+      "img_url_local": "2026-09-30/taobao/商品图片/02_[演示]_超自然行动组摸_主图.jpeg",
+      "img_fetch_note": null
+    },
+    {
+      "is_demo": true,
+      "rank": 3,
+      "title": "[演示] 超自然行动组摸金陪 同行款 3号 摸金陪玩装备",
+      "price": "24.9",
+      "sales": "300",
+      "shop": "演示店铺3",
+      "city": "浙江杭州",
+      "tags": [
+        "演示",
+        "装备包撤离"
+      ],
+      "img_url": "https://picsum.photos/seed/tb33/400/400",
+      "detail_url": "https://example.invalid/demo/taobao/3",
+      "selling_points": [
+        "装备包撤离",
+        "首单免费"
+      ],
+      "fetch_status": "演示数据",
+      "skus": {
+        "status": "待核验",
+        "skus": [],
+        "reason": "详情页为演示地址或无详情链接"
+      },
+      "img_file": "2026-09-30/taobao/商品图片/03_[演示]_超自然行动组摸_主图.jpeg",
+      "img_url_local": "2026-09-30/taobao/商品图片/03_[演示]_超自然行动组摸_主图.jpeg",
+      "img_fetch_note": null
+    },
+    {
+      "is_demo": true,
+      "rank": 4,
+      "title": "[演示] 超自然行动组陪玩 同行款 1号 摸金陪玩装备",
+      "price": "14.9",
+      "sales": "100",
+      "shop": "演示店铺1",
+      "city": "浙江杭州",
+      "tags": [
+        "演示",
+        "装备包撤离"
+      ],
+      "img_url": "https://picsum.photos/seed/tb14/400/400",
+      "detail_url": "https://example.invalid/demo/taobao/4",
+      "selling_points": [
+        "装备包撤离",
+        "首单免费"
+      ],
+      "fetch_status": "演示数据",
+      "skus": {
+        "status": "待核验",
+        "skus": [],
+        "reason": "详情页为演示地址或无详情链接"
+      },
+      "img_file": "2026-09-30/taobao/商品图片/04_[演示]_超自然行动组陪_主图.jpeg",
+      "img_url_local": "2026-09-30/taobao/商品图片/04_[演示]_超自然行动组陪_主图.jpeg",
+      "img_fetch_note": null
+    },
+    {
+      "is_demo": true,
+      "rank": 5,
+      "title": "[演示] 超自然行动组陪玩 同行款 2号 摸金陪玩装备",
+      "price": "19.9",
+      "sales": "200",
+      "shop": "演示店铺2",
+      "city": "浙江杭州",
+      "tags": [
+        "演示",
+        "装备包撤离"
+      ],
+      "img_url": "https://picsum.photos/seed/tb25/400/400",
+      "detail_url": "https://example.invalid/demo/taobao/5",
+      "selling_points": [
+        "装备包撤离",
+        "首单免费"
+      ],
+      "fetch_status": "演示数据",
+      "skus": {
+        "status": "待核验",
+        "skus": [],
+        "reason": "详情页为演示地址或无详情链接"
+      },
+      "img_file": "2026-09-30/taobao/商品图片/05_[演示]_超自然行动组陪_主图.jpeg",
+      "img_url_local": "2026-09-30/taobao/商品图片/05_[演示]_超自然行动组陪_主图.jpeg",
+      "img_fetch_note": null
+    },
+    {
+      "is_demo": true,
+      "rank": 6,
+      "title": "[演示] 超自然行动组陪玩 同行款 3号 摸金陪玩装备",
+      "price": "24.9",
+      "sales": "300",
+      "shop": "演示店铺3",
+      "city": "浙江杭州",
+      "tags": [
+        "演示",
+        "装备包撤离"
+      ],
+      "img_url": "https://picsum.photos/seed/tb36/400/400",
+      "detail_url": "https://example.invalid/demo/taobao/6",
+      "selling_points": [
+        "装备包撤离",
+        "首单免费"
+      ],
+      "fetch_status": "演示数据",
+      "skus": {
+        "status": "待核验",
+        "skus": [],
+        "reason": "详情页为演示地址或无详情链接"
+      },
+      "img_file": "2026-09-30/taobao/商品图片/06_[演示]_超自然行动组陪_主图.jpeg",
+      "img_url_local": "2026-09-30/taobao/商品图片/06_[演示]_超自然行动组陪_主图.jpeg",
+      "img_fetch_note": null
+    },
+    {
+      "is_demo": true,
+      "rank": 7,
+      "title": "[演示] 摸金陪玩 同行款 1号 摸金陪玩装备",
+      "price": "14.9",
+      "sales": "100",
+      "shop": "演示店铺1",
+      "city": "浙江杭州",
+      "tags": [
+        "演示",
+        "装备包撤离"
+      ],
+      "img_url": "https://picsum.photos/seed/tb17/400/400",
+      "detail_url": "https://example.invalid/demo/taobao/7",
+      "selling_points": [
+        "装备包撤离",
+        "首单免费"
+      ],
+      "fetch_status": "演示数据",
+      "skus": {
+        "status": "待核验",
+        "skus": [],
+        "reason": "详情页为演示地址或无详情链接"
+      },
+      "img_file": "2026-09-30/taobao/商品图片/07_[演示]_摸金陪玩_同行_主图.jpeg",
+      "img_url_local": "2026-09-30/taobao/商品图片/07_[演示]_摸金陪玩_同行_主图.jpeg",
+      "img_fetch_note": null
+    },
+    {
+      "is_demo": true,
+      "rank": 8,
+      "title": "[演示] 摸金陪玩 同行款 2号 摸金陪玩装备",
+      "price": "19.9",
+      "sales": "200",
+      "shop": "演示店铺2",
+      "city": "浙江杭州",
+      "tags": [
+        "演示",
+        "装备包撤离"
+      ],
+      "img_url": "https://picsum.photos/seed/tb28/400/400",
+      "detail_url": "https://example.invalid/demo/taobao/8",
+      "selling_points": [
+        "装备包撤离",
+        "首单免费"
+      ],
+      "fetch_status": "演示数据",
+      "skus": {
+        "status": "待核验",
+        "skus": [],
+        "reason": "详情页为演示地址或无详情链接"
+      },
+      "img_file": "2026-09-30/taobao/商品图片/08_[演示]_摸金陪玩_同行_主图.jpeg",
+      "img_url_local": "2026-09-30/taobao/商品图片/08_[演示]_摸金陪玩_同行_主图.jpeg",
+      "img_fetch_note": null
+    },
+    {
+      "is_demo": true,
+      "rank": 9,
+      "title": "[演示] 摸金陪玩 同行款 3号 摸金陪玩装备",
+      "price": "24.9",
+      "sales": "300",
+      "shop": "演示店铺3",
+      "city": "浙江杭州",
+      "tags": [
+        "演示",
+        "装备包撤离"
+      ],
+      "img_url": "https://picsum.photos/seed/tb39/400/400",
+      "detail_url": "https://example.invalid/demo/taobao/9",
+      "selling_points": [
+        "装备包撤离",
+        "首单免费"
+      ],
+      "fetch_status": "演示数据",
+      "skus": {
+        "status": "待核验",
+        "skus": [],
+        "reason": "详情页为演示地址或无详情链接"
+      },
+      "img_file": "2026-09-30/taobao/商品图片/09_[演示]_摸金陪玩_同行_主图.jpeg",
+      "img_url_local": "2026-09-30/taobao/商品图片/09_[演示]_摸金陪玩_同行_主图.jpeg",
+      "img_fetch_note": null
+    },
+    {
+      "is_demo": true,
+      "rank": 10,
+      "title": "[演示] 超自然行动组 同行款 1号 摸金陪玩装备",
+      "price": "14.9",
+      "sales": "100",
+      "shop": "演示店铺1",
+      "city": "浙江杭州",
+      "tags": [
+        "演示",
+        "装备包撤离"
+      ],
+      "img_url": "https://picsum.photos/seed/tb110/400/400",
+      "detail_url": "https://example.invalid/demo/taobao/10",
+      "selling_points": [
+        "装备包撤离",
+        "首单免费"
+      ],
+      "fetch_status": "演示数据",
+      "skus": {
+        "status": "待核验",
+        "skus": [],
+        "reason": "详情页为演示地址或无详情链接"
+      },
+      "img_file": "2026-09-30/taobao/商品图片/10_[演示]_超自然行动组__主图.jpeg",
+      "img_url_local": "2026-09-30/taobao/商品图片/10_[演示]_超自然行动组__主图.jpeg",
+      "img_fetch_note": null
+    }
+  ]
 }
