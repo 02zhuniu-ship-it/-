@@ -920,5 +920,238 @@
       }
     ],
     "ts": "2026-09-30T10:59:06.954150"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "taobao",
+    "type": "PPT报告",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 0,
+    "failed": 0,
+    "files": [
+      "2026-09-30/taobao/PPT报告/淘宝同行爆款分析-2026-09-30.pptx"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T11:00:24.634163"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "taobao",
+    "type": "数据",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 1,
+    "failed": 0,
+    "files": [
+      "2026-09-30/taobao/数据/data_taobao_search_v2.json",
+      "2026-09-30/taobao/数据/data_taobao_search_v2.latest.json"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T11:00:24.636740"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "taobao",
+    "type": "商品图片",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 10,
+    "failed": 0,
+    "files": [
+      "2026-09-30/taobao/商品图片/07_[演示]_摸金陪玩_同行_主图.jpeg",
+      "2026-09-30/taobao/商品图片/06_[演示]_超自然行动组陪_主图.jpeg",
+      "2026-09-30/taobao/商品图片/01_[演示]_超自然行动组摸_主图.jpeg",
+      "2026-09-30/taobao/商品图片/02_[演示]_超自然行动组摸_主图.jpeg",
+      "2026-09-30/taobao/商品图片/03_[演示]_超自然行动组摸_主图.jpeg",
+      "2026-09-30/taobao/商品图片/10_[演示]_超自然行动组__主图.jpeg",
+      "2026-09-30/taobao/商品图片/09_[演示]_摸金陪玩_同行_主图.jpeg",
+      "2026-09-30/taobao/商品图片/04_[演示]_超自然行动组陪_主图.jpeg",
+      "2026-09-30/taobao/商品图片/08_[演示]_摸金陪玩_同行_主图.jpeg",
+      "2026-09-30/taobao/商品图片/05_[演示]_超自然行动组陪_主图.jpeg"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T11:00:24.639692"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "PPT报告",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 0,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/PPT报告/闲鱼同行爆款分析-2026-09-30.pptx"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T11:00:24.641992"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "数据",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 1,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/数据/data_xianyu_detail.latest.json",
+      "2026-09-30/xianyu/数据/data_xianyu_detail.json"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T11:00:24.644629"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "商品图片",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 10,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/商品图片/10_[演示]_闲鱼_超自然摸_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/03_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/09_[演示]_闲鱼_摸金陪玩_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/04_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/08_[演示]_闲鱼_摸金陪玩_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/02_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/07_[演示]_闲鱼_摸金陪玩_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/06_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/05_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/01_[演示]_闲鱼_超自然行_主图.jpeg"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T11:00:24.647605"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "详情卡片",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 10,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/详情卡片/详情卡片4.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片5.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片10.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片6.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片8.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片1.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片2.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片9.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片3.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片7.png"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T11:00:24.650416"
+  },
+  {
+    "date": "2026-09-30",
+    "demo": false,
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "generated": 37,
+    "success": 37,
+    "failed": 0,
+    "bad_files": [],
+    "failures": [
+      {
+        "step": "淘宝采集",
+        "keyword": "超自然行动组摸金陪",
+        "field": "商品列表",
+        "reason": "淘宝搜索公开接口返回受限，无法免登录解析结构化商品数据",
+        "tried": "GET s.taobao.com/search",
+        "status": "失败"
+      },
+      {
+        "step": "淘宝采集",
+        "keyword": "超自然行动组陪玩",
+        "field": "商品列表",
+        "reason": "淘宝搜索公开接口返回受限，无法免登录解析结构化商品数据",
+        "tried": "GET s.taobao.com/search",
+        "status": "失败"
+      },
+      {
+        "step": "淘宝采集",
+        "keyword": "摸金陪玩",
+        "field": "商品列表",
+        "reason": "淘宝搜索公开接口返回受限，无法免登录解析结构化商品数据",
+        "tried": "GET s.taobao.com/search",
+        "status": "失败"
+      },
+      {
+        "step": "淘宝采集",
+        "keyword": "超自然行动组",
+        "field": "商品列表",
+        "reason": "淘宝搜索公开接口返回受限，无法免登录解析结构化商品数据",
+        "tried": "GET s.taobao.com/search",
+        "status": "失败"
+      },
+      {
+        "step": "taobao采集",
+        "keyword": "全部",
+        "field": "商品列表",
+        "reason": "免登录真实采集被登录/风控墙拦截，未获取到任何商品",
+        "tried": "多关键词搜索公开页面/接口",
+        "status": "失败"
+      },
+      {
+        "step": "闲鱼采集",
+        "keyword": "超自然行动组摸金陪",
+        "field": "商品列表",
+        "reason": "闲鱼公开搜索接口返回受限，无法免登录解析结构化商品数据",
+        "tried": "GET goofish.com/search",
+        "status": "失败"
+      },
+      {
+        "step": "闲鱼采集",
+        "keyword": "超自然行动组",
+        "field": "商品列表",
+        "reason": "闲鱼公开搜索接口返回受限，无法免登录解析结构化商品数据",
+        "tried": "GET goofish.com/search",
+        "status": "失败"
+      },
+      {
+        "step": "闲鱼采集",
+        "keyword": "摸金陪玩",
+        "field": "商品列表",
+        "reason": "闲鱼公开搜索接口返回受限，无法免登录解析结构化商品数据",
+        "tried": "GET goofish.com/search",
+        "status": "失败"
+      },
+      {
+        "step": "闲鱼采集",
+        "keyword": "超自然摸金陪",
+        "field": "商品列表",
+        "reason": "闲鱼公开搜索接口返回受限，无法免登录解析结构化商品数据",
+        "tried": "GET goofish.com/search",
+        "status": "失败"
+      },
+      {
+        "step": "xianyu采集",
+        "keyword": "全部",
+        "field": "商品列表",
+        "reason": "免登录真实采集被登录/风控墙拦截，未获取到任何商品",
+        "tried": "多关键词搜索公开页面/接口",
+        "status": "失败"
+      }
+    ],
+    "ts": "2026-09-30T11:00:24.651784"
   }
 ]
