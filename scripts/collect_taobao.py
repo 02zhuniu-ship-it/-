@@ -12,27 +12,43 @@ import time
 
 import common
 import fetch_utils as fu
+import apify_client
 
 
 def collect_taobao_real(keywords, exclude_shops, target, logger, failures, session):
-    """尝试真实抓取。返回商品列表 + 计数。"""
+    """尝试真实抓取：优先 Apify 云浏览器，失败降级免登录探测。返回商品列表。"""
+
+    # —— 1) 优先用 Apify 真实浏览器采集 ——
+    def warn(txt):
+        logger.warning(txt)
+    try:
+        apify_items = apify_client.collect_taobao_by_apify(keywords, target, warn)
+        if apify_items:
+            # 过滤掉自己的店铺
+            filtered = [it for it in apify_items
+                        if not any(excl and excl in it.get("shop", "") for excl in exclude_shops)]
+            logger.info(f"[淘宝] Apify 采集到 {len(filtered)} 个真实商品")
+            return filtered
+        if apify_client.apify_token_configured():
+            logger.warning("[淘宝] Apify 已配置但未采到数据，按失败记录")
+    except Exception as e:
+        logger.warning(f"[淘宝] Apify 采集异常: {e}")
+        failures.append({"step": "淘宝采集", "keyword": "全部", "field": "商品列表",
+                         "reason": f"Apify异常: {e}", "status": "失败"})
+
+    # —— 2) 降级：免登录页面探测 ——
     results = []
     got = 0
     for kw in keywords:
         if got >= target:
             break
         try:
-            logger.info(f"[淘宝] 搜索关键词: {kw}")
-            # 淘宝搜索接口（此处为公开入口尝试，环境受限多半失败）
+            logger.info(f"[淘宝] 降级免登录探测关键词: {kw}")
             url = f"https://s.taobao.com/search?q={fu.requests.utils.quote(kw)}"
             r = fu.http_get(url, session=session, timeout=12)
-            # 乐观解析；拿不到页面结构化数据则按失败处理
             html = r.text
             if "item" not in html:
                 raise RuntimeError("页面无商品结构化数据（登录/风控墙）")
-            # ---- 真实解析示例 ----
-            # 每个 item 提取：title / price / sales / shop / img / url
-            # 此处因淘宝接口极难在免登录环境拿到，走失败记录，绝不硬凑
             raise RuntimeError("淘宝搜索公开接口返回受限，无法免登录解析结构化商品数据")
         except Exception as e:
             logger.warning(f"[淘宝] 关键词[{kw}]失败: {e}")

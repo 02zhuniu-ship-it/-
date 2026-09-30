@@ -6,15 +6,35 @@ import time
 
 import common
 import fetch_utils as fu
+import apify_client
 
 
 def collect_xianyu_real(keywords, exclude_shops, target, logger, failures, session):
     results = []
+
+    # —— 1) 优先用 Apify 真实浏览器采集 ——
+    def warn(txt):
+        logger.warning(txt)
+    try:
+        apify_items = apify_client.collect_xianyu_by_apify(keywords, target, warn)
+        if apify_items:
+            filtered = [it for it in apify_items
+                        if not any(excl and excl in it.get("seller", "") for excl in exclude_shops)]
+            logger.info(f"[闲鱼] Apify 采集到 {len(filtered)} 个真实商品")
+            return filtered
+        if apify_client.apify_token_configured():
+            logger.warning("[闲鱼] Apify 已配置但未采到数据")
+    except Exception as e:
+        logger.warning(f"[闲鱼] Apify 采集异常: {e}")
+        failures.append({"step": "闲鱼采集", "keyword": "全部", "field": "商品列表",
+                         "reason": f"Apify异常: {e}", "status": "失败"})
+
+    # —— 2) 降级：免登录页面探测 ——
     for kw in keywords:
         if len(results) >= target:
             break
         try:
-            logger.info(f"[闲鱼] 搜索关键词: {kw}")
+            logger.info(f"[闲鱼] 降级免登录探测关键词: {kw}")
             url = f"https://www.goofish.com/search?k={fu.requests.utils.quote(kw)}"
             r = fu.http_get(url, session=session, timeout=12)
             html = r.text

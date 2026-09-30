@@ -37,6 +37,9 @@ jobs:
           COOKIES: ${{ secrets.COOKIES }}
           TAOBAO_COOKIE: ${{ secrets.TAOBAO_COOKIE }}
           XIANYU_COOKIE: ${{ secrets.XIANYU_COOKIE }}
+          # Apify 数据源：在 GitHub 仓库 Settings→Secrets and variables→Actions 里新建
+          # secret 名为 APIFY_TOKEN，值为你在 apify.com 设置的 API 密钥。填了才走 Apify 真实采集。
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
         run: |
           cd scripts
           python run_all.py
