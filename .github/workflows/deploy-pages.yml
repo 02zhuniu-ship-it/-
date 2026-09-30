@@ -23,9 +23,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: 配置 Pages
+      - name: 配置 Pages（自动开启）
         id: config
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: 上传静态网页
         uses: actions/upload-pages-artifact@v3
         with:
