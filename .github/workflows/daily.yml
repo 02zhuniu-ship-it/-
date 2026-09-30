@@ -32,6 +32,11 @@ jobs:
       - name: 运行全流程（真实采集）
         env:
           TZ: Asia/Shanghai
+          # 你登录一次后填的凭证会被安全注入到这里，云端每天用它去抓真数据。
+          # 没填时走免登录（抓不到会如实标「待核验」）。配置方法见仓库「凭证设置」说明。
+          COOKIES: ${{ secrets.COOKIES }}
+          TAOBAO_COOKIE: ${{ secrets.TAOBAO_COOKIE }}
+          XIANYU_COOKIE: ${{ secrets.XIANYU_COOKIE }}
         run: |
           cd scripts
           python run_all.py

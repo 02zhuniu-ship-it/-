@@ -2,6 +2,7 @@
 
 import re
 import json
+import os
 import time
 import requests
 
@@ -9,6 +10,36 @@ import common
 
 UA = ("Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) "
       "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1")
+
+
+def _load_cookies(session):
+    """把使用者提供的登录凭证（Cookie 原样字符串）喂进会话。
+
+    凭证来源（优先级从高到低）：
+      1. 环境变量 COOKIES             —— 云端 workflow 里由使用者填，最常用
+      2. 环境变量 TAOBAO_COOKIE        —— 若细分淘宝/闲鱼
+      3. 环境变量 XIANYU_COOKIE
+    可填多个平台 Cookie，用换行分隔（每行一个）。若为空则保持免登录。
+    """
+    raw = os.environ.get("COOKIES") or ""
+    tb = os.environ.get("TAOBAO_COOKIE") or ""
+    xy = os.environ.get("XIANYU_COOKIE") or ""
+    blocks = [b for b in (raw, tb, xy) if b]
+    if not blocks:
+        return
+    lines = []
+    for b in blocks:
+        for line in b.splitlines():
+            line = line.strip()
+            if line:
+                lines.append(line)
+    for line in lines:
+        for pair in line.split(";"):
+            pair = pair.strip()
+            if not pair or "=" not in pair:
+                continue
+            k, v = pair.split("=", 1)
+            session.cookies.set(k.strip(), v.strip())
 
 
 def make_session():
@@ -19,6 +50,7 @@ def make_session():
         "Accept": "text/html,application/json,application/xhtml+xml,*/*;q=0.8",
         "Referer": "https://www.taobao.com/",
     })
+    _load_cookies(s)
     return s
 
 

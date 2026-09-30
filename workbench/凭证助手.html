@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录凭证助手 · 只登录一次</title>
+<style>
+  body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:#f5f1f0;color:#3a3434;font-size:15px;line-height:1.7;margin:0;padding:24px}
+  h1{font-size:22px} h2{font-size:17px;margin-top:28px}
+  .step{background:#fff;border:1px solid #e7e0de;border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 3px 12px rgba(58,52,52,.05)}
+  .btn{display:inline-block;background:#a06b6b;color:#fff;border:none;border-radius:10px;padding:12px 22px;font-size:15px;cursor:pointer}
+  textarea{width:100%;height:120px;border:1px solid #e7e0de;border-radius:10px;padding:10px;font-size:12px;margin-top:8px}
+  .hint{color:#7a6e6e;font-size:13px;margin-top:6px}
+  .warn{background:#fdf3f1;border:1px solid #ecd7d2;border-radius:12px;padding:14px;color:#8a5a50;font-size:13px;margin-top:18px}
+  .ok{color:#4a8f6a;font-weight:600}
+  .badge{display:inline-block;background:#e9f4ed;color:#4a8f6a;border-radius:99px;padding:2px 10px;font-size:12px}
+  ol{padding-left:20px}
+  li{margin:6px 0}
+  kbd{background:#eee;border:1px solid #ccc;border-radius:4px;padding:1px 6px;font-size:12px;font-family:monospace}
+</style>
+</head>
+<body>
+<h1>🔑 登录凭证助手 <span class="badge">只操作一次</span></h1>
+<p>帮你把「登录淘宝/闲鱼后的凭证」copy 出来。全程在<strong>你电脑浏览器</strong>上做，只做一次。</p>
+
+<div class="step">
+  <h2>第1步：先在电脑浏览器登录淘宝/闲鱼</h2>
+  <p>点下面按钮在新标签登录，用<strong>手机号验证码或App扫码</strong>登录成功后再回来：</p>
+  <p>
+    <a class="btn" href="https://www.taobao.com" target="_blank">去登录淘宝</a>
+    <a class="btn" href="https://www.goofish.com" target="_blank">去登录闲鱼</a>
+  </p>
+</div>
+
+<div class="step">
+  <h2>第2步：在登录好的页面，按 F12 打开工具（照下面点）</h2>
+  <ol>
+    <li>回到你<strong>已登录的淘宝/闲鱼页面</strong>。</li>
+    <li>键盘按一下 <kbd>F12</kbd>，右边/下边会弹出开发者工具。</li>
+    <li>工具上方点 <b>Application</b>（应用）标签；没看到就点「»」更多里找。<span class="hint">如果用英文浏览器就是 Application。</span></li>
+    <li>左边列表点 <b>Cookies</b> 展开，点下面那行（通常叫 <code>taobao.com</code> 或 <code>goofish.com</code>）。</li>
+    <li>右边会出现表格，<b>点任意一个 Cookie 名称</b>（就是表格里第一列的第一个词）。</li>
+    <li>按 <kbd>Ctrl</kbd>+<kbd>A</kbd> 全选，<kbd>Ctrl</kbd>+<kbd>C</kbd> 复制。</li>
+    <li>到下面第3步的文本框里 <kbd>Ctrl</kbd>+<kbd>V</kbd> 粘贴。</li>
+  </ol>
+  <p class="hint">闲鱼同理：在 goofish.com 那页的 F12 → Application → Cookies → goofish.com 里复制。想抓哪个平台就复制哪个。</p>
+</div>
+
+<div class="step">
+  <h2>第3步：把凭证贴过来并复制</h2>
+  <p class="hint">把上面复制到的那整段，按 <kbd>Ctrl</kbd>+<kbd>V</kbd> 粘贴到下面：</p>
+  <textarea id="cookieBox" placeholder="在这里 Ctrl+V 粘贴你的凭证（一大串字符）…"></textarea>
+  <p><button class="btn" id="copyBtn">📋 复制凭证（准备发给我）</button></p>
+  <div id="copyMsg" class="hint"></div>
+</div>
+
+<div class="warn">
+  ⚠️ 说明与风险：
+  <ul>
+    <li>工具本身设计成「不偷看具体内容」——凭证留在你的浏览器里，你决定是否发给我。</li>
+    <li>凭证有效几天到几周，过期后你会被我提醒<strong>再登录复制一次</strong>（不是每天）。</li>
+    <li>用你自己的账号云端自动抓，可能被淘宝/闲鱼<strong>临时验证/限</strong>（一般不会封号）。重要账号建议慎重。</li>
+  </ul>
+</div>
+
+<script>
+const box=document.getElementById('cookieBox');
+const copyBtn=document.getElementById('copyBtn');
+const copyMsg=document.getElementById('copyMsg');
+copyBtn.onclick=()=>{
+  box.select();
+  try{ document.execCommand('copy'); }catch(e){}
+  navigator.clipboard&&navigator.clipboard.writeText(box.value).catch(()=>{});
+  const n=box.value.split(';').filter(Boolean).length;
+  copyMsg.innerHTML = box.value ? ('<span class="ok">✓ 已复制 ' + n + ' 段。</span>现在直接粘贴到聊天里发给我，或按「凭证设置-只登录一次.md」自己存进云端Secret。') : '<span class="hint">请先在上方粘贴你的凭证再点复制。</span>';
+};
+</script>
+</body>
+</html>
