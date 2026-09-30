@@ -8,7 +8,8 @@ import json
 import os
 import re
 
-ARCH = "/workspace/archive/2026-09-30"
+ARCH_ROOT = "/workspace/archive"
+ARCH = "/workspace/archive/2026-09-30"  # 当天商品数据
 OUT = "/workspace/workbench/工作台.html"
 
 
@@ -28,6 +29,75 @@ def clean(t):
     return re.sub(r"\s+", " ", str(t or "")).strip()
 
 
+_TIER_STOP = {
+    "自动发货", "官服", "换绑", "账号", "帐号", "可换", "全新", "周免", "初始",
+    "亿", "w", "万", "资源号", "新手", "安卓", "苹果", "平台", "Game", "官谷",
+}
+
+
+def extract_tiers(title):
+    """从淘宝标题里诚实提取档位价格。
+
+    淘宝真实SKU需登录详情页才能拿到(当前待核验)。不少商品标题自带多个档位价格，
+    例如「自動充值...10 60 300 680 980 1980 6480金磚充值」。这里把标题中成串的数字
+    找出来当作档位提示，明确标注"来自标题·详情需登录核验"，绝不编造。
+    """
+    if not title:
+        return []
+    # 含明确价格语义词（充值/金砖/代充/元）：标题里成串数字基本都是档位价格，全部提取
+    if re.search(r'充值|金砖|代充|\d+元', title):
+        nums = re.findall(r'\d+(?:\.\d+)?', title)
+    else:
+        nums = []
+        for m in re.findall(r'\b(?:\d{1,5}\s*[,.、/ ]?){2,}\b', title):
+            nums += re.findall(r'\d+(?:\.\d+)?', m)
+    clean_nums = []
+    for n in nums:
+        v = float(n)
+        # 过滤明显不是价格档位的数字（ID、百分比、亿/万计数）
+        if 1 <= v <= 50000 and re.fullmatch(r'\d+(?:\.\d+)?', n):
+            clean_nums.append(n.rstrip('0').rstrip('.') if '.' in n else n)
+    # 去重保序
+    flat = []
+    for v in clean_nums:
+        if v not in flat:
+            flat.append(v)
+    return flat[:12]
+
+
+def cat_of(f):
+    f = str(f)
+    if "PPT" in f:
+        return "PPT报告"
+    if "商品图片" in f:
+        return "商品图片"
+    if "详情卡片" in f:
+        return "详情卡片"
+    if "失败" in f:
+        return "失败记录"
+    return "数据文件"
+
+
+def collect_days():
+    """按天分组归档文件：{date: [相对路径,...]}，每天内部再按平台/类型分。"""
+    days = {}
+    if not os.path.isdir(ARCH_ROOT):
+        return days
+    for name in sorted(os.listdir(ARCH_ROOT)):
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", name):
+            continue
+        daydir = os.path.join(ARCH_ROOT, name)
+        fl = []
+        for dirpath, _, fns in os.walk(daydir):
+            if "_system" in dirpath:
+                continue
+            for fn in fns:
+                fl.append(os.path.relpath(os.path.join(dirpath, fn), ARCH_ROOT))
+        if fl:
+            days[name] = sorted(fl)
+    return days
+
+
 def main():
     items = []
 
@@ -42,6 +112,7 @@ def main():
             "img": b64(it.get("img_file")) or "",
             "points": [clean(s) for s in (it.get("selling_points") or [])][:2],
             "src": clean(it.get("fetch_status")), "type": "实物",
+            "tiers": extract_tiers(clean(it.get("title"))),
         })
 
     xy = json.load(open(os.path.join(ARCH, "xianyu/数据/data_xianyu_detail.json")))
@@ -62,28 +133,32 @@ def main():
     except Exception:
         r = {}
 
-    files = []
-    for dirpath, _, fns in os.walk("/workspace/archive/2026-09-30"):
-        if "_system" in dirpath:
-            continue
-        for fn in fns:
-            files.append(os.path.relpath(os.path.join(dirpath, fn), "/workspace/archive"))
-    files.sort()
+    # 归档按天分组
+    days_map = collect_days()
+    all_files = [f for fl in days_map.values() for f in fl]
 
     n_tb = sum(1 for i in items if i["platform"] == "淘宝")
     n_xy = sum(1 for i in items if i["platform"] == "闲鱼")
 
-    stat = {"date": "2026-09-30", "generated": r.get("generated", len(files)),
+    stat = {"date": "2026-09-30", "generated": r.get("generated", len(all_files)),
             "success": r.get("success", 0), "failed": r.get("failed", 0),
             "taobao": n_tb, "xianyu": n_xy, "demo": r.get("demo", False)}
 
+    # days: 数组, 每天 {"date":.., "cat":[file,...]}
+    days_list = []
+    for d, fl in days_map.items():
+        grouped = {}
+        for f in fl:
+            grouped.setdefault(cat_of(f), []).append(f)
+        days_list.append({"date": d, "groups": grouped})
+
     html = (PAGE
             .replace("__DATA__", json.dumps(items, ensure_ascii=False))
-            .replace("__FILES__", json.dumps(files, ensure_ascii=False))
+            .replace("__DAYS__", json.dumps(days_list, ensure_ascii=False))
             .replace("__STAT__", json.dumps(stat, ensure_ascii=False)))
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(html)
-    print("生成完成:", OUT, "| 商品:", len(items), "| 归档文件:", len(files))
+    print("生成完成:", OUT, "| 商品:", len(items), "| 天数:", len(days_list))
 
 
 PAGE = r"""<!DOCTYPE html>
@@ -98,7 +173,7 @@ PAGE = r"""<!DOCTYPE html>
 body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--text)}
 .app{max-width:520px;margin:0 auto;min-height:100vh;padding-bottom:76px}
 /* 顶栏 */
-.topbar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);padding:14px 16px 10px}
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 16px 10px}
 .topbar h1{font-size:18px;font-weight:700}
 .topbar .sub{font-size:12px;color:var(--sub);margin-top:2px}
 /* 页面区 */
@@ -117,7 +192,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-se
 .stat .num{font-size:22px;font-weight:800}.stat .lab{font-size:11px;color:var(--sub);margin-top:3px}
 .stat .t{color:var(--tb)}.stat .x{color:#1a7f5a}.stat .g{color:#4a8f6a}
 /* 爆品 */
-.tabbar{display:flex;padding:10px 12px;gap:8px;overflow-x:auto}
+.tabbar{position:sticky;top:0;z-index:20;display:flex;padding:10px 12px;gap:8px;overflow-x:auto;background:#fff;border-bottom:1px solid var(--line)}
 .tab{flex:0 0 auto;padding:6px 14px;border-radius:99px;background:#ece7e1;font-size:13px;color:#6b6358;cursor:pointer}
 .tab.on{background:#1f1b16;color:#fff;font-weight:600}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
@@ -130,14 +205,23 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-se
 .ctitle{font-size:13px;line-height:1.35;height:36px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .cprice{font-size:16px;font-weight:700;color:#e23b1e;margin-top:6px}.cprice .y{font-size:11px;font-weight:500}
 .cshop{font-size:11px;color:var(--sub);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tierline{font-size:11px;color:#b0853a;margin-top:2px;font-weight:600}
 .empty{display:none;text-align:center;color:#b3aca2;padding:50px 0;font-size:14px}
+/* 档位价格 */
+.tiers{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px}
+.tier{flex:1 1 44%;min-width:110px;background:#f8f4ef;border:1px solid var(--line);border-radius:10px;padding:7px 11px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.tier .lab{color:var(--sub)}.tier .val{color:#e23b1e;font-weight:700;font-size:13px}
+.tier.note{flex-basis:100%;background:#fff7ef;border-color:#f0dcc0;color:#8a6420;font-size:11px;display:block;padding:7px 11px}
 /* 归档 */
-.archive{margin:6px 12px}
-.agroup{margin-bottom:16px}
-.ah{font-size:14px;font-weight:700;margin:10px 0 6px}
-.afile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin-bottom:6px}
+.archive{margin:4px 10px}
+.daycard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:14px}
+.daycard .dt{font-size:15px;font-weight:800;margin-bottom:2px;display:flex;align-items:center;justify-content:space-between}
+.daycard .dt .cnt{font-size:11px;font-weight:500;color:var(--sub)}
+.daycard .dsub{font-size:11px;color:#9c9090;margin-bottom:8px}
+.ah{font-size:13px;font-weight:700;margin:8px 0 5px;color:#4a433c}
+.afile{background:#faf8f5;border:1px solid var(--line);border-radius:8px;padding:7px 10px;margin-bottom:5px}
 .afile .nm{font-size:12px;word-break:break-all}
-.afile .meta{font-size:11px;color:#9c9090;margin-top:2px}
+.afile .meta{font-size:11px;color:#9c9090;margin-top:1px}
 /* 关于 */
 .about{margin:14px 12px}
 .card2{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;font-size:13px;line-height:1.7;color:#4a433c}
@@ -199,8 +283,8 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-se
 
   <!-- 历史归档 -->
   <div class="page" id="pg-archive">
-    <div style="padding:13px 14px 4px"><b style="font-size:15px">🗂️ 云端归档文件（2026-09-30）</b></div>
-    <div class="archive" id="archive"></div>
+    <div style="padding:13px 14px 4px"><b style="font-size:15px">🗂️ 云端归档 · 按天整理</b></div>
+    <div id="archive-day" class="archive" ></div>
   </div>
 
   <!-- 关于 -->
@@ -230,17 +314,15 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-se
 
 <script>
 var DATA=__DATA__;
-var FILES=__FILES__;
+var DAYS=__DAYS__;
 var STAT=__STAT__;
 var LIST=DATA.slice();
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function catOf(f){
-  if(String(f).indexOf('PPT报告')>-1)return 'PPT';
-  if(String(f).indexOf('商品图片')>-1)return '图片';
-  if(String(f).indexOf('详情卡片')>-1)return '卡片';
-  if(String(f).indexOf('失败')>-1)return '失败记录';
-  return '数据';
+function platformOf(f){
+  if(String(f).indexOf('/taobao/')>-1)return '淘宝';
+  if(String(f).indexOf('/xianyu/')>-1)return '闲鱼';
+  return '系统';
 }
 /* ------ 概览 ------ */
 (function(){
@@ -265,11 +347,17 @@ function renderList(){
       ?'<img src="'+it.img+'" alt="" loading="lazy">'
       :'<div>虚拟商品 · 无图</div>';
     var bg=it.platform==='淘宝'?'var(--tb)':'#1b6b4f';
+    var tierline='';
+    if(it.platform==='淘宝' && (it.tiers||[]).length){
+      var first=it.tiers[0];
+      tierline='<div class="tierline">¥'+first+'起 · 共'+it.tiers.length+'档</div>';
+    }
     $('grid').insertAdjacentHTML('beforeend',
       '<div class="card" data-i="'+i+'">'+
       '<div class="pic">'+pic+'<span class="plat" style="background:'+bg+'">'+it.platform+'</span></div>'+
       '<div class="cinfo"><div class="ctitle">'+esc(it.title)+'</div>'+
       '<div class="cprice"><span class="y">￥</span>'+esc(it.price)+'</div>'+
+      tierline+
       '<div class="cshop">'+esc(it.shop||'')+'</div></div></div>');
   });
 }
@@ -285,26 +373,39 @@ $('tabs').addEventListener('click',function(e){
   LIST=f==='all'?DATA.slice():DATA.filter(function(x){return x.platform===f});
   renderList();
 });
-/* ------ 归档 ------ */
+/* ------ 归档（按天整理）------ */
 (function(){
-  var box=$('archive');box.innerHTML='';
-  var groups={'失败记录':[],'PPT':[],'图片':[],'卡片':[],'数据':[]};
-  FILES.forEach(function(f){
-    var c=catOf(f);(groups[c]=groups[c]||[]).push(f);
-  });
-  var label={'失败记录':'📛 失败记录','PPT':'📊 PPT 报告','图片':'🖼️ 商品图片','卡片':'🃏 详情卡片','数据':'📄 数据文件'};
-  Object.keys(groups).forEach(function(cat){
-    var arr=groups[cat];if(!arr.length)return;
-    box.insertAdjacentHTML('beforeend','<div class="ah">'+label[cat]+'（'+arr.length+'）</div>');
-    arr.forEach(function(f){
-      var name=String(f).split('/').pop();
-      box.insertAdjacentHTML('beforeend',
-        '<div class="afile"><div><div class="nm">'+esc(name)+'</div>'+
-        '<div class="meta">'+esc(f)+'</div></div></div>');
+  if(!DAYS || !DAYS.length){$('archive-day').innerHTML='<div class="empty" style="display:block">暂无归档</div>';return;}
+  var CLabel={'PPT报告':'📊 PPT 报告','商品图片':'🖼️ 商品图片','详情卡片':'🃏 详情卡片','失败记录':'📛 失败记录','数据文件':'📄 数据文件'};
+  DAYS.forEach(function(day){
+    var card=document.createElement('div');card.className='daycard';
+    var total=0;day.groups && Object.keys(day.groups).forEach(function(c){total+=day.groups[c].length;});
+    var header='<div class="dt"><span>📅 '+day.date+'</span><span class="cnt">'+total+' 个文件</span></div>'+
+      '<div class="dsub">淘宝 + 闲鱼 · 自动采集归档</div>';
+    var body='';
+    Object.keys(CLabel).forEach(function(cat){
+      var arr=(day.groups&&day.groups[cat])||[];if(!arr.length)return;
+      body+='<div class="ah">'+CLabel[cat]+'（'+arr.length+'）</div>';
+      arr.forEach(function(f){
+        var name=String(f).split('/').pop();
+        body+='<div class="afile"><div class="nm">'+esc(name)+'</div>'+
+          '<div class="meta">['+platformOf(f)+'] · '+esc(f)+'</div></div>';
+      });
     });
+    card.innerHTML=header+body;
+    $('archive-day').appendChild(card);
   });
 })();
 /* ------ 抽屉 ------ */
+function tierHtml(it){
+  if(it.platform!=='淘宝')return '';
+  var t=(it.tiers||[]);if(!t.length)return '';
+  var chips=t.map(function(v){
+    return '<div class="tier"><span class="lab">档位</span><span class="val">￥'+v+'</span></div>';
+  }).join('');
+  return '<div class="tiers">'+chips+
+    '<div class="tier note">⚠️ 档位价格取自商品标题，为真实信息；具体每个款式的最终价格以详情页为准（淘宝详情需登录核验）。</div></div>';
+}
 function openD(idx){
   var it=DATA[idx];if(!it)return;
   var ps=(it.points||[]).map(function(s){return '<div class="drow"><span class="k">卖点</span><span class="v">'+esc(s)+'</span></div>'}).join('');
@@ -313,6 +414,7 @@ function openD(idx){
     '<div class="pbig">'+big+'</div>'+
     '<div class="dtitle">'+esc(it.title)+'</div>'+
     '<div class="dprice"><span class="y">￥</span>'+esc(it.price)+'</div>'+
+    tierHtml(it)+
     '<div class="drow"><span class="k">平台</span><span class="v">'+it.platform+'</span></div>'+
     '<div class="drow"><span class="k">店铺</span><span class="v">'+esc(it.shop||'-')+'</span></div>'+
     '<div class="drow"><span class="k">来源</span><span class="v">'+esc(it.src||'真实采集')+'</span></div>'+
