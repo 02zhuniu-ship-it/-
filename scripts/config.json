@@ -8,8 +8,8 @@
     "xianyu": ["毛球爱玩超自然行动组"]
   },
   "keywords": {
-    "taobao": ["超自然行动组摸金陪", "超自然行动组陪玩", "摸金陪玩", "超自然行动组"],
-    "xianyu": ["超自然行动组摸金陪", "超自然行动组", "摸金陪玩", "超自然摸金陪"]
+    "taobao": ["超自然行动组", "摸金陪玩", "超自然行动组陪玩", "超自然行动组摸金陪"],
+    "xianyu": ["超自然行动组", "摸金陪玩", "超自然摸金陪", "超自然行动组摸金陪"]
   },
   "example_demo": {
     "taobao": ["超自然行动组摸金陪", "摸金陪玩"],
@@ -21,10 +21,11 @@
     "cookies_env": "COOKIES",
     "enabled_web_probe": true,
     "apify": {
-      "actor_taobao": "zanster/taobao-search-scraper",
-      "actor_xianyu": "gantianca/xianyu-goofish-search",
+      "token": "apify_api_X5gJ2d9udPKrbAvLTEI7QpKzEkFAFZ2RaNyv",
+      "actor_taobao": "WYOrcbcxOj3UjwdbP",
+      "actor_xianyu": "YLcsrxRnWKvfvrLIq",
       "max_items_per_keyword": 15,
-      "timeout_seconds": 180
+      "timeout_seconds": 360
     }
   },
   "output": {
