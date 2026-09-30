@@ -86,10 +86,27 @@ async function load(){
     const t = await (await fetch(`${RAW}/archive/_system/tasks.json`)).json();
     tasks = Array.isArray(t)?t:[];
   }catch(e){console.warn("tasks",e);}
+  // 如果在线读取为空（私有仓库未公开），显示引导
+  if(!Object.keys(manifest).length){ renderPrivateGuide(); return; }
   render();
 }
 
 function groupOf(date){return manifest[date]||{};}
+
+function renderPrivateGuide(){
+  document.getElementById("app").innerHTML = `
+    <div class="card">
+      <h2>🔒 需要公开访问云端数据</h2>
+      <p style="color:var(--sub);margin-bottom:12px">工作台网页要从云端读取归档数据，但当前仓库是「私有」的，浏览器无法免登录读取。</p>
+      <div class="empty" style="text-align:left">
+        <b>两种方式任选其一，之后重启本页即可看到数据：</b><br><br>
+        <b>方式A（稳妥）</b>：GitHub 网页 → 仓库 Settings → General → Danger Zone → 把仓库改为 Public。<br><br>
+        <b>方式B</b>：在 GitHub 网页直接浏览归档文件（不需要本工作台）：
+        打开仓库 → <code>archive/</code> 文件夹 → 按日期/平台/类型查看所有数据、图片、PPT。<br><br>
+        <span style="color:var(--weak)">说明：每天 00:05 云端已自动运行并把结果归档到该仓库。即使网页读不到，数据也始终安全地存在云端仓库里。</span>
+      </div>
+    </div>`;
+}
 
 function render(){
   const g = groupOf(today);
