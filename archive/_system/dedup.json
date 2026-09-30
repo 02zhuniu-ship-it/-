@@ -533,5 +533,25 @@
     "path": "2026-09-30/xianyu/数据/data_xianyu_detail.latest.json",
     "size": 33847,
     "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "29d0b149309e5df9064c1479931a048b4769ebbf41ff79c25c4b34f440f111b8": {
+    "path": "2026-10-01/taobao/PPT报告/淘宝同行爆款分析-2026-10-01.pptx",
+    "size": 46577,
+    "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "6924a783daba69c64ddbb542c0bb76eeaec164b4b3b59c370a2cffaef334e2b3": {
+    "path": "2026-10-01/taobao/数据/data_taobao_search_v2.json",
+    "size": 29006,
+    "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "aff4a424be75052e587a367ff8f1db2cd4a9b51ba589a8139530059ef6fe2112": {
+    "path": "2026-10-01/xianyu/PPT报告/闲鱼同行爆款分析-2026-10-01.pptx",
+    "size": 48292,
+    "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "c0b10cb4bb39ac56b79a557d2c18de5fe29204d6af18f554bc888768984a98c9": {
+    "path": "2026-10-01/xianyu/数据/data_xianyu_detail.latest.json",
+    "size": 33118,
+    "task": "每日淘宝+闲鱼竞品分析"
   }
 }
