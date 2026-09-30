@@ -1072,5 +1072,318 @@
     "bad_files": [],
     "failures": [],
     "ts": "2026-09-30T11:00:25.831130"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "taobao",
+    "type": "PPT报告",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 1,
+    "failed": 0,
+    "files": [
+      "2026-09-30/taobao/PPT报告/淘宝同行爆款分析-2026-09-30.pptx"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:36:08.234795"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "taobao",
+    "type": "数据",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 2,
+    "failed": 0,
+    "files": [
+      "2026-09-30/taobao/数据/data_taobao_search_v2.json",
+      "2026-09-30/taobao/数据/data_taobao_search_v2.latest.json"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:36:08.238124"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "taobao",
+    "type": "商品图片",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 10,
+    "failed": 0,
+    "files": [
+      "2026-09-30/taobao/商品图片/06_[演示]_超自然行动组陪_主图.jpeg",
+      "2026-09-30/taobao/商品图片/01_[演示]_超自然行动组摸_主图.jpeg",
+      "2026-09-30/taobao/商品图片/03_[演示]_超自然行动组摸_主图.jpeg",
+      "2026-09-30/taobao/商品图片/04_[演示]_超自然行动组陪_主图.jpeg",
+      "2026-09-30/taobao/商品图片/05_[演示]_超自然行动组陪_主图.jpeg",
+      "2026-09-30/taobao/商品图片/08_[演示]_摸金陪玩_同行_主图.jpeg",
+      "2026-09-30/taobao/商品图片/09_[演示]_摸金陪玩_同行_主图.jpeg",
+      "2026-09-30/taobao/商品图片/10_[演示]_超自然行动组__主图.jpeg",
+      "2026-09-30/taobao/商品图片/02_[演示]_超自然行动组摸_主图.jpeg",
+      "2026-09-30/taobao/商品图片/07_[演示]_摸金陪玩_同行_主图.jpeg"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:36:08.243784"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "PPT报告",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 1,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/PPT报告/闲鱼同行爆款分析-2026-09-30.pptx"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:36:08.246519"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "详情卡片",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 10,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/详情卡片/详情卡片4.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片3.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片6.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片9.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片8.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片10.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片5.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片1.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片7.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片2.png"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:36:08.251974"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "数据",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 2,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/数据/data_xianyu_detail.latest.json",
+      "2026-09-30/xianyu/数据/data_xianyu_detail.json"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:36:08.254869"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "商品图片",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 10,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/商品图片/10_[演示]_闲鱼_超自然摸_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/01_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/07_[演示]_闲鱼_摸金陪玩_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/05_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/03_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/04_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/06_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/09_[演示]_闲鱼_摸金陪玩_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/08_[演示]_闲鱼_摸金陪玩_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/02_[演示]_闲鱼_超自然行_主图.jpeg"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:36:08.260572"
+  },
+  {
+    "date": "2026-09-30",
+    "demo": true,
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "generated": 37,
+    "success": 37,
+    "failed": 0,
+    "bad_files": [],
+    "failures": [
+      {
+        "step": "taobao输出",
+        "reason": "Traceback (most recent call last):\n  File \"/workspace/scripts/build_outputs.py\", line 12, in <module>\n    from pptx import Presentation\nModuleNotFoundError: No module named 'pptx'\n"
+      },
+      {
+        "step": "xianyu输出",
+        "reason": "Traceback (most recent call last):\n  File \"/workspace/scripts/build_outputs.py\", line 12, in <module>\n    from pptx import Presentation\nModuleNotFoundError: No module named 'pptx'\n"
+      }
+    ],
+    "ts": "2026-09-30T13:36:08.262439"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "taobao",
+    "type": "PPT报告",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 0,
+    "failed": 0,
+    "files": [
+      "2026-09-30/taobao/PPT报告/淘宝同行爆款分析-2026-09-30.pptx"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:37:15.258145"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "taobao",
+    "type": "数据",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 1,
+    "failed": 0,
+    "files": [
+      "2026-09-30/taobao/数据/data_taobao_search_v2.json",
+      "2026-09-30/taobao/数据/data_taobao_search_v2.latest.json"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:37:15.262596"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "taobao",
+    "type": "商品图片",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 10,
+    "failed": 0,
+    "files": [
+      "2026-09-30/taobao/商品图片/06_[演示]_超自然行动组陪_主图.jpeg",
+      "2026-09-30/taobao/商品图片/01_[演示]_超自然行动组摸_主图.jpeg",
+      "2026-09-30/taobao/商品图片/03_[演示]_超自然行动组摸_主图.jpeg",
+      "2026-09-30/taobao/商品图片/04_[演示]_超自然行动组陪_主图.jpeg",
+      "2026-09-30/taobao/商品图片/05_[演示]_超自然行动组陪_主图.jpeg",
+      "2026-09-30/taobao/商品图片/08_[演示]_摸金陪玩_同行_主图.jpeg",
+      "2026-09-30/taobao/商品图片/09_[演示]_摸金陪玩_同行_主图.jpeg",
+      "2026-09-30/taobao/商品图片/10_[演示]_超自然行动组__主图.jpeg",
+      "2026-09-30/taobao/商品图片/02_[演示]_超自然行动组摸_主图.jpeg",
+      "2026-09-30/taobao/商品图片/07_[演示]_摸金陪玩_同行_主图.jpeg"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:37:15.268626"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "PPT报告",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 0,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/PPT报告/闲鱼同行爆款分析-2026-09-30.pptx"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:37:15.272197"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "详情卡片",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 10,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/详情卡片/详情卡片4.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片3.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片6.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片9.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片8.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片10.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片5.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片1.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片7.png",
+      "2026-09-30/xianyu/详情卡片/详情卡片2.png"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:37:15.278057"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "数据",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 1,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/数据/data_xianyu_detail.latest.json",
+      "2026-09-30/xianyu/数据/data_xianyu_detail.json"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:37:15.281942"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-09-30",
+    "project": "",
+    "platform": "xianyu",
+    "type": "商品图片",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 10,
+    "failed": 0,
+    "files": [
+      "2026-09-30/xianyu/商品图片/10_[演示]_闲鱼_超自然摸_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/01_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/07_[演示]_闲鱼_摸金陪玩_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/05_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/03_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/04_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/06_[演示]_闲鱼_超自然行_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/09_[演示]_闲鱼_摸金陪玩_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/08_[演示]_闲鱼_摸金陪玩_主图.jpeg",
+      "2026-09-30/xianyu/商品图片/02_[演示]_闲鱼_超自然行_主图.jpeg"
+    ],
+    "failed_detail": [],
+    "ts": "2026-09-30T13:37:15.288012"
+  },
+  {
+    "date": "2026-09-30",
+    "demo": true,
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "generated": 37,
+    "success": 37,
+    "failed": 0,
+    "bad_files": [],
+    "failures": [],
+    "ts": "2026-09-30T13:37:15.290031"
   }
 ]
