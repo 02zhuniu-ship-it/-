@@ -11,6 +11,7 @@ import re
 ARCH_ROOT = "/workspace/archive"
 ARCH = "/workspace/archive/2026-09-30"  # 当天商品数据
 OUT = "/workspace/workbench/工作台.html"
+OUT_LITE = "/workspace/workbench/工作台-手机版.html"  # 轻量版：图片走外链，供网上托管/手机秒开
 
 
 def b64(path):
@@ -110,6 +111,7 @@ def main():
             "price": it.get("price"), "shop": clean(it.get("shop")),
             "city": clean(it.get("city")), "url": it.get("detail_url", ""),
             "img": b64(it.get("img_file")) or "",
+            "img_url": it.get("img_url", ""),
             "points": [clean(s) for s in (it.get("selling_points") or [])][:2],
             "src": clean(it.get("fetch_status")), "type": "实物",
             "tiers": extract_tiers(clean(it.get("title"))),
@@ -124,7 +126,8 @@ def main():
             "platform": "闲鱼", "title": clean(it.get("title")),
             "price": it.get("price"), "shop": clean(it.get("seller")),
             "city": clean(it.get("city")), "url": it.get("detail_url", ""),
-            "img": img, "points": [clean(it.get("desc_full"))[:160]],
+            "img": img, "img_url": it.get("img_url", ""),
+            "points": [clean(it.get("desc_full"))[:160]],
             "src": "虚拟商品", "type": "虚拟",
         })
 
@@ -158,7 +161,23 @@ def main():
             .replace("__STAT__", json.dumps(stat, ensure_ascii=False)))
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(html)
+
+    # —— 手机轻量版：图片改用公网原图地址，不内嵌，体积从 10MB+ 降到几十 KB ——
+    def lite(it):
+        it = dict(it)
+        it["img"] = it.pop("img_url", "") or it.get("img", "")
+        it.pop("img_url", None)
+        return it
+    lite_items = [lite(i) for i in items]
+    lite_html = (PAGE
+                 .replace("__DATA__", json.dumps(lite_items, ensure_ascii=False))
+                 .replace("__DAYS__", json.dumps(days_list, ensure_ascii=False))
+                 .replace("__STAT__", json.dumps(stat, ensure_ascii=False)))
+    with open(OUT_LITE, "w", encoding="utf-8") as f:
+        f.write(lite_html)
+
     print("生成完成:", OUT, "| 商品:", len(items), "| 天数:", len(days_list))
+    print("手机版:", OUT_LITE, "| 体积:", os.path.getsize(OUT_LITE)//1024, "KB")
 
 
 PAGE = r"""<!DOCTYPE html>

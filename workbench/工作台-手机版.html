@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>电商竞品 · 工作台</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#f4f2f0;--card:#fff;--text:#1f1b16;--sub:#8a8378;--line:#ece7e1;--tb:#ff5000;--accent:#a06b6b}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--text)}
+.app{max-width:520px;margin:0 auto;min-height:100vh;padding-bottom:76px}
+/* 顶栏 */
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 16px 10px}
+.topbar h1{font-size:18px;font-weight:700}
+.topbar .sub{font-size:12px;color:var(--sub);margin-top:2px}
+/* 页面区 */
+.page{display:none;animation:fade .25s}
+.page.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+/* 概览 */
+.hero{background:var(--card);margin:14px 12px;border-radius:16px;padding:18px;border:1px solid var(--line)}
+.hero h2{font-size:17px;margin-bottom:6px}
+.hero p{font-size:13px;color:var(--sub);line-height:1.6;margin-top:8px}
+.hero .row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.hero .row:last-child{border-bottom:none}.hero .k{color:var(--sub)}.hero .v{font-weight:600}
+.pillx{display:inline-block;font-size:11px;padding:2px 9px;border-radius:99px;background:#eef4ef;color:#2a7a52}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:4px 12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center}
+.stat .num{font-size:22px;font-weight:800}.stat .lab{font-size:11px;color:var(--sub);margin-top:3px}
+.stat .t{color:var(--tb)}.stat .x{color:#1a7f5a}.stat .g{color:#4a8f6a}
+/* 爆品 */
+.tabbar{position:sticky;top:0;z-index:20;display:flex;padding:10px 12px;gap:8px;overflow-x:auto;background:#fff;border-bottom:1px solid var(--line)}
+.tab{flex:0 0 auto;padding:6px 14px;border-radius:99px;background:#ece7e1;font-size:13px;color:#6b6358;cursor:pointer}
+.tab.on{background:#1f1b16;color:#fff;font-weight:600}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
+.card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;transition:transform .12s}
+.card:active{transform:scale(.97)}
+.pic{position:relative;aspect-ratio:1/1;background:#eee;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:12px}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.plat{position:absolute;top:8px;left:8px;font-size:11px;padding:2px 8px;border-radius:6px;color:#fff}
+.cinfo{padding:9px 10px 11px}
+.ctitle{font-size:13px;line-height:1.35;height:36px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.cprice{font-size:16px;font-weight:700;color:#e23b1e;margin-top:6px}.cprice .y{font-size:11px;font-weight:500}
+.cshop{font-size:11px;color:var(--sub);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tierline{font-size:11px;color:#b0853a;margin-top:2px;font-weight:600}
+.empty{display:none;text-align:center;color:#b3aca2;padding:50px 0;font-size:14px}
+/* 档位价格 */
+.tiers{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px}
+.tier{flex:1 1 44%;min-width:110px;background:#f8f4ef;border:1px solid var(--line);border-radius:10px;padding:7px 11px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.tier .lab{color:var(--sub)}.tier .val{color:#e23b1e;font-weight:700;font-size:13px}
+.tier.note{flex-basis:100%;background:#fff7ef;border-color:#f0dcc0;color:#8a6420;font-size:11px;display:block;padding:7px 11px}
+/* 归档 */
+.archive{margin:4px 10px}
+.daycard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:14px}
+.daycard .dt{font-size:15px;font-weight:800;margin-bottom:2px;display:flex;align-items:center;justify-content:space-between}
+.daycard .dt .cnt{font-size:11px;font-weight:500;color:var(--sub)}
+.daycard .dsub{font-size:11px;color:#9c9090;margin-bottom:8px}
+.ah{font-size:13px;font-weight:700;margin:8px 0 5px;color:#4a433c}
+.afile{background:#faf8f5;border:1px solid var(--line);border-radius:8px;padding:7px 10px;margin-bottom:5px}
+.afile .nm{font-size:12px;word-break:break-all}
+.afile .meta{font-size:11px;color:#9c9090;margin-top:1px}
+/* 关于 */
+.about{margin:14px 12px}
+.card2{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;font-size:13px;line-height:1.7;color:#4a433c}
+.card2 h3{font-size:15px;margin-bottom:6px}
+.warn{background:#fff7ef;border-color:#f0dcc0;color:#8a6420}
+/* 抽屉 */
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:60;opacity:0;visibility:hidden;transition:.25s}
+.drawer.show{opacity:1;visibility:visible}
+.sheet{position:absolute;bottom:0;left:0;right:0;max-width:520px;margin:0 auto;background:#fff;border-radius:18px 18px 0 0;max-height:88vh;overflow-y:auto;transform:translateY(100%);transition:.3s}
+.drawer.show .sheet{transform:translateY(0)}
+.sheet .hd{position:sticky;top:0;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}
+.sheet .hd .h{font-size:16px;font-weight:700}
+.close{width:30px;height:30px;border-radius:50%;background:#f1ece7;color:#7a7166;font-size:16px;border:none;cursor:pointer}
+.sheet .body{padding:16px}
+.pbig{width:100%;border-radius:12px;background:#eee;display:flex;align-items:center;justify-content:center;min-height:220px;color:#aaa;font-size:13px}
+.pbig img{width:100%;border-radius:12px;display:block}
+.dtitle{font-size:15px;line-height:1.5;margin:14px 0 10px}
+.dprice{font-size:22px;font-weight:800;color:#e23b1e}.dprice .y{font-size:13px;font-weight:500}
+.drow{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-bottom:1px solid var(--line)}
+.drow .k{color:var(--sub)}.drow .v{font-weight:500;max-width:65%;text-align:right}
+.dbtn{display:block;width:100%;margin:18px 0 6px;padding:13px;border:none;border-radius:12px;background:#1f1b16;color:#fff;font-size:15px;font-weight:600;cursor:pointer;text-align:center;text-decoration:none}
+/* 底部导航 */
+.nav{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:0 auto;background:#fff;border-top:1px solid var(--line);display:flex;z-index:40;padding-bottom:env(safe-area-inset-bottom)}
+.nav .ni{flex:1;text-align:center;padding:9px 6px 8px;cursor:pointer;color:#9a927f}
+.nav .ni.on{color:#1f1b16;font-weight:700}
+.nav .ni .ic{font-size:20px;line-height:1}.nav .ni .la{font-size:11px;margin-top:3px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar"><h1>🛠️ 电商竞品工作台</h1><div class="sub">超自然行动组 · 同行爆品自动采集</div></div>
+
+  <!-- 概览 -->
+  <div class="page on" id="pg-home">
+    <div class="hero">
+      <h2>🌅 今日采集概览</h2>
+      <p id="ov_date"></p>
+      <div class="row" style="padding-top:10px"><span class="k">任务状态</span><span class="v" id="ov_st"></span></div>
+      <div class="row"><span class="k">淘宝收录</span><span class="v" id="ov_tb"></span></div>
+      <div class="row"><span class="k">闲鱼收录</span><span class="v" id="ov_xy"></span></div>
+      <div class="row"><span class="k">生成文件</span><span class="v" id="ov_gen"></span></div>
+      <div class="row"><span class="k">成功 / 失败</span><span class="v" id="ov_ok"></span></div>
+      <div class="row"><span class="k">数据来源</span><span class="v"><span class="pillx" id="ov_src"></span></span></div>
+      <p>点下方「今日爆品」查看竞品商品；点「历史归档」查看当天所有资料文件。</p>
+    </div>
+    <div class="stats" id="ov_stats"></div>
+  </div>
+
+  <!-- 今日爆品 -->
+  <div class="page" id="pg-products">
+    <div class="tabbar" id="tabs">
+      <div class="tab on" data-f="all">全部</div>
+      <div class="tab" data-f="淘宝">淘宝</div>
+      <div class="tab" data-f="闲鱼">闲鱼</div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty">该分类暂无商品</div>
+  </div>
+
+  <!-- 历史归档 -->
+  <div class="page" id="pg-archive">
+    <div style="padding:13px 14px 4px"><b style="font-size:15px">🗂️ 云端归档 · 按天整理</b></div>
+    <div id="archive-day" class="archive" ></div>
+  </div>
+
+  <!-- 关于 -->
+  <div class="page" id="pg-about">
+    <div class="about">
+      <div class="card2"><h3>📌 这是什么</h3>自动采集「超自然行动组」同行竞品的工作台。每天云端自动抓取淘宝+闲鱼的真实竞品数据，归档成表格、图片、PPT，并汇总到这里方便查看。</div>
+      <div class="card2"><h3>🔄 自动运行</h3>系统配置为每天凌晨 00:05（北京时间）自动采集并归档。你不需要手动操作，打开本工作台就能看到当天成果。</div>
+      <div class="card2"><h3>🔍 数据真实性</h3>展示的是从公开渠道真实采集到的商品信息。确实抓不到的部分会如实标记，不编造。闲鱼类多为兑换码、账号等虚拟商品。</div>
+      <div class="card2 warn"><h3>⚠️ 两个提醒</h3>①数据为采集当下快照，价格/库存会随时间变化。②闲鱼虚拟商品请通过原商品链接自行核实后再交易。</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="ni on" data-tab="pg-home"><div class="ic">🏠</div><div class="la">概览</div></div>
+  <div class="ni" data-tab="pg-products"><div class="ic">🛍️</div><div class="la">今日爆品</div></div>
+  <div class="ni" data-tab="pg-archive"><div class="ic">🗂️</div><div class="la">历史归档</div></div>
+  <div class="ni" data-tab="pg-about"><div class="ic">📖</div><div class="la">关于</div></div>
+</div>
+
+<div class="drawer" id="drawer">
+  <div class="sheet">
+    <div class="hd"><div class="h">商品详情</div><button class="close" onclick="closeD()">✕</button></div>
+    <div class="body" id="dbody"></div>
+  </div>
+</div>
+
+<script>
+var DATA=[{"platform": "淘宝", "title": "【現貨】超自然行動組 怪怪奇奇系列 馬口鐵徽章 吧唧 官谷 周邊", "price": "15", "shop": "超自然行動組旗艦店", "city": "", "url": "https://world.taobao.com/item/1036383446543.htm", "img": "https://img.alicdn.com/imgextra/i3/2220852014254/O1CN01YyR6Qw1hINzhElOUf_!!4611686018427382958-2-item_pic.png", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": []}, {"platform": "淘宝", "title": "正版卡遊超自然行動組卡片趣影包2元包收藏卡牌兩元卡包遊戲周邊", "price": "39.8", "shop": "赤寶母嬰專營店", "city": "", "url": "https://world.taobao.com/item/1080822682056.htm", "img": "https://img.alicdn.com/imgextra/i4/732283339/O1CN01qRWymnCMWfB1chua_!!4611686018427380171-2-item_pic.png", "points": ["包"], "src": "Apify真实采集", "type": "实物", "tiers": ["2"]}, {"platform": "淘宝", "title": "超自然行動組剷剷幣號初始號超自然1億剷剷幣號新手號可自動發貨", "price": "10", "shop": "樂享遊戲工作室", "city": "", "url": "https://world.taobao.com/item/1002598902343.htm", "img": "https://img.alicdn.com/imgextra/i3/2216354957172/O1CN01nmKaJn22qpjQJSjt4_!!2216354957172.png", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": []}, {"platform": "淘宝", "title": "【自動充值】超自然行動組10 60 300 680 980 1980 6480金磚充值", "price": "1.3", "shop": "西玩網路遊戲點數卡專營店", "city": "", "url": "https://world.taobao.com/item/1030111739006.htm", "img": "https://img.alicdn.com/imgextra/i2/389256334/O1CN01nxUQnX1wf1oAwEKPR_!!4611686018427384974-2-item_pic.png", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": ["10", "60", "300", "680", "980", "1980", "6480"]}, {"platform": "淘宝", "title": "超自然行動組剷剷號資源號安卓蘋果官服號可換綁1億剷剷幣帳號", "price": "0.6", "shop": "002光遇愛心", "city": "", "url": "https://world.taobao.com/item/992441134148.htm", "img": "https://img.alicdn.com/imgextra/i3/2220218184792/O1CN01JgHXcX1lGn4JY1pql_!!2220218184792.jpg", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": []}, {"platform": "淘宝", "title": "超自然行動組金磚代充特權卡豪華魔盒30 68 128 328 648 60", "price": "30", "shop": "李白遊戲充值服務", "city": "", "url": "https://world.taobao.com/item/945145533254.htm", "img": "https://img.alicdn.com/imgextra/i1/927097404/O1CN01HVEOFB24Z5YJY1SkB_!!927097404.jpg", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": ["30", "68", "128", "328", "648", "60"]}, {"platform": "淘宝", "title": "超自然行動組剷剷幣初始號1億剷剷幣號5000W新手帳號安卓蘋果官服", "price": "1.98", "shop": "薇薇網路遊戲雜貨店", "city": "", "url": "https://world.taobao.com/item/1046229228955.htm", "img": "https://img.alicdn.com/imgextra/i4/2217267628931/O1CN01lOdzZx2FqSOmcWtH3_!!2217267628931.jpg", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": []}, {"platform": "淘宝", "title": "超自然行動組1億剷剷號資源號安卓蘋果官服號可換綁剷剷幣帳號", "price": "0.6", "shop": "超自然剷剷幣號", "city": "", "url": "https://world.taobao.com/item/1041905004350.htm", "img": "https://img.alicdn.com/imgextra/i2/2221690911764/O1CN01HL93Of1OtxnCtd85C_!!2221690911764.jpg", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": []}, {"platform": "淘宝", "title": "【自動充值】超自然行動組60 300 680 980 1980 6480金磚充值", "price": "6.5", "shop": "槓掌生活服務專營店", "city": "", "url": "https://world.taobao.com/item/1029942448279.htm", "img": "https://img.alicdn.com/imgextra/i1/2220294564377/O1CN014HFRau1iCihrK4Gb2_!!4611686018427382297-2-item_pic.png", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": ["60", "300", "680", "980", "1980", "6480"]}, {"platform": "淘宝", "title": "超自然行動組金磚代充 30元316金磚 工號充值 活動獎勵同步ID直充", "price": "25.98", "shop": "鼎貴遊戲", "city": "", "url": "https://world.taobao.com/item/1065154775616.htm", "img": "https://img.alicdn.com/imgextra/i4/2845761507/O1CN01CJAAcI1N0G1ZRr1Uh_!!2845761507.png", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": ["30", "316"]}, {"platform": "淘宝", "title": "超自然行動組剷剷幣號剷剷幣帳號管服手機PC通用可換綁1億剷剷幣", "price": "10", "shop": "樂享遊戲工作室", "city": "", "url": "https://world.taobao.com/item/1063547557024.htm", "img": "https://img.alicdn.com/imgextra/i3/2216354957172/O1CN01IgpViB22qpjajprdS_!!2216354957172.png", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": []}, {"platform": "淘宝", "title": "【自動充值】超自然行動組10 60 300 680 980 1980 6480金磚充值", "price": "1.3", "shop": "槓掌生活服務專營店", "city": "", "url": "https://world.taobao.com/item/1027545407774.htm", "img": "https://img.alicdn.com/imgextra/i2/2220294564377/O1CN01vjLu5D1iCihr10jvd_!!4611686018427382297-2-item_pic.png", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": ["10", "60", "300", "680", "980", "1980", "6480"]}, {"platform": "淘宝", "title": "超自然行動組剷剷幣號1000w-1億可免費改名可換綁", "price": "0.8", "shop": "鵬鵬超自然小店", "city": "", "url": "https://world.taobao.com/item/1057307932072.htm", "img": "https://img.alicdn.com/imgextra/i1/2219985458967/O1CN01hPeQ832G6wg9290l4_!!2219985458967.jpg", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": []}, {"platform": "淘宝", "title": "【自動充值】超自然行動組10 60 300 680 980 1980 6480金磚充值", "price": "1.3", "shop": "西玩網路遊戲點數卡專營店", "city": "", "url": "https://world.taobao.com/item/1031707681736.htm", "img": "https://img.alicdn.com/imgextra/i3/389256334/O1CN016VDamz1wf1phwwdPy_!!4611686018427384974-2-item_pic.png", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": ["10", "60", "300", "680", "980", "1980", "6480"]}, {"platform": "淘宝", "title": "超自然行動組科技輔助腳本 支持手遊 模擬器 直裝最新版本", "price": "1", "shop": "Mod手遊", "city": "", "url": "https://world.taobao.com/item/976786028886.htm", "img": "https://img.alicdn.com/imgextra/i1/2218665582113/O1CN01ouJRU51RTnycNrDP3_!!2218665582113.png", "points": [], "src": "Apify真实采集", "type": "实物", "tiers": []}, {"platform": "闲鱼", "title": "1.56r出【超自然行动组-中华小厨娘】兑换码 官方全渠道可用！ 官方CDK兑换，下单自动秒发兑换码 虚拟商品，付款后立马发 注意：如领取失败支持无理由退款 需要直接拍，有问题随时私聊", "price": "1.56", "shop": "你最爱的票卷bb", "city": "", "url": "https://www.goofish.com/item?id=1084414636105", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "超自然行动组【小熊猫，血C,维雨，繁星，神威】 【24小时自动发货】无需问在不在，全天拍下秒发货 超自然显棺除雾，附带完整教程 安卓可以拍！ iOS，鸿蒙勿拍！ ❗ ❗ ❗ 无需问能不能用，能上架就是能用 仅支持安卓系统！！！新版本超自然，小熊猫，维雨，Dany，血C，等等...", "price": "1", "shop": "网络通讯", "city": "", "url": "https://www.goofish.com/item?id=1064487244282", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "【邮箱发货】超自然行动组，真天王20只 拍下付款后发送:ID➕邮箱赠送哦 邮箱上限未送满20只当天可补（补发小号）过天不补！！ 拍下默认成年，虚拟物品，不退不换，感谢配合～ 超自然真天王 真天王超自然葫芦 超自然怪物葫芦", "price": "2", "shop": "速趴贝吉塔", "city": "", "url": "https://www.goofish.com/item?id=1060082078518", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "1.56r出【超自然行动组-中华小厨娘】兑换码 1.56r出【超自然行动组-中华小厨娘】兑换码 官方全渠道可用！ 官方CDK兑换，下单自动秒发兑换码 虚拟商品，付款后立马发 注意：如领取失败支持无理由退款 需要直接拍，有问题随时私聊", "price": "1.56", "shop": "北周潜水黑水母", "city": "", "url": "https://www.goofish.com/item?id=1084574729465", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "超自然行动组饿了么联动头套兑换码 淘宝闪购联动头套 拍下秒发兑换码，虚拟商品，直接到账 安卓苹果都能用，操作简单 拍下后会发兑换码 根据教程进行兑换 如果兑换失败支持无理由退款 链接在就是有货", "price": "1", "shop": "虎鲸卡劵", "city": "", "url": "https://www.goofish.com/item?id=1069030833276", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "超自然行动组罗森联动兑换码 【24小时自动发货】超自然行动组罗森联动兑换码头像框森友同行头套CDK联动活动限定 仅道具兑换码，无实物 商品已设置24小时自动发货，下单直接给兑换码，自助下单～～ 虚拟商品，发货后非商品原因不退不换", "price": "1", "shop": "游戏兑换码", "city": "", "url": "https://www.goofish.com/item?id=1067135341402", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "1.87r出【超自然行动组-中华小厨娘】cdk兑换码官方全渠 道可用![火][火] 官方CDK兑换，下单自动秒发兑换码 虚拟商品，付款后立马发[比心][比心] 【注意：如领取失败支持无理由退款】！！ 需要直接拍，链接还在就是还有货", "price": "1.87", "shop": "爩鱻麤龗灪厵", "city": "", "url": "https://www.goofish.com/item?id=1043438047952", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "9.9开天宫（纯绿） 【超自然行动组·云南虫谷·开天宫·纯绿】 [绿圆]高质量百人大团，下单开打！ [绿圆]纯绿陪陪，技术有保障 [绿圆]售后超级好！！！有任何问题第一时间解决，绝不拖沓敷衍 [绿圆]内有点群 [闪亮]...", "price": "9.99", "shop": "超自然行动组", "city": "", "url": "https://www.goofish.com/item?id=1064155671003", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "游戏【超自然行动组】 [火]最新兑换码 安卓 iOS苹果通用 下单后秒发卡 兑换后游戏内秒到账! 自由无规则可开出：0-10W金砖 铲铲币 999祈愿石 时装 桃木剑 荧光棒 镜生遗梦时装 白光莹时装 水王子时装 罗丽时装限定皮肤圣光之谕 遗失的童话 心跳摇 天使的呼唤 圣心之泪 鱼骨 小雨摇 姬...", "price": "1", "shop": "最火网游小店", "city": "", "url": "https://www.goofish.com/item?id=1032052911294", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "【签到免费领】【瑶台梦皮肤兑换码】超自然行动组莉莉限定皮肤+ 同款小兔宠物 1.官方活动，童叟无欺，嫌麻烦别来 2..道具是永久的 3.下单前先咨询客服查询 4.参加完活动填写好自己的区服等待查询结果 5.签到三天可发放，支持领取到道具后再下单 6.通过游戏内邮箱等发送，无套路 7.每人限量领取1个道...", "price": "2.87", "shop": "海洋星举重川贝", "city": "", "url": "https://www.goofish.com/item?id=1054796031749", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "【99亿代金】《超自然行动组》成品号+皮肤载具全解锁！ 关键词⚠️：★（成品号）★（皮肤多）★（载具全）★（装扮丰富） ✓账号皮肤多，载具全，装扮丰富，角色皮肤、员工、珍宝阁装扮齐全 ✓梦居等级高，铲铲币多，装备道具都在，直接登录就能玩 ✓账号稳定不封号，支持全平台互通，可换绑，组队开麦都...", "price": "13", "shop": "腼腆的椰子蟹", "city": "", "url": "https://www.goofish.com/item?id=1082905588012", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "超自然行动组（正版内部特权号免费送） ……………………………………&hellip...", "price": "8.52", "shop": "cokelala", "city": "", "url": "https://www.goofish.com/item?id=1077625559538", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "超自然行动组莉莉背包陪3r/h全图 摸金装备默认：3额外背包➕扇子➕腰包（传送除颤摸金符） 会卡龙珠/音响 虫谷扇子换琵琶 无麦", "price": "3", "shop": "JIA宏", "city": "", "url": "https://www.goofish.com/item?id=1009343153318", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "超自然行动组出号，标价出不刀 超自然行动组出号，标价出不刀 小黄遗失的童话/故宫皮+莉莉情公主 +薇薇安128魔盒+阿念128魔盒/故宫皮 +巫铃儿素影瑶光+爱丽丝故宫皮/丝缕哀歌 小黄耀世9抽 薇薇安耀世6抽 小鲨匕首5抽 小狗蛇点点3抽 现赛季魔盒满级，铲铲币几...", "price": "2.16", "shop": "北周潜水黑水母", "city": "", "url": "https://www.goofish.com/item?id=1088252144782", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}, {"platform": "闲鱼", "title": "超自然行动组50万新大金 随机出一个珠9.9r指定出一个珠15.5r随机两个珠17.9r期间出/雮尘珠/飞天神龙像/九龙九凤冠/祈愿圣杯直接结单 纯绿 可莉莉附身 可上号（上号打会更快）包装备 包损耗", "price": "9.9", "shop": "羊尾唧唧想要立", "city": "", "url": "https://www.goofish.com/item?id=1086154139589", "img": "", "points": [""], "src": "虚拟商品", "type": "虚拟"}];
+var DAYS=[{"date": "2026-09-30", "groups": {"PPT报告": ["2026-09-30/taobao/PPT报告/淘宝同行爆款分析-2026-09-30.pptx", "2026-09-30/xianyu/PPT报告/闲鱼同行爆款分析-2026-09-30.pptx"], "商品图片": ["2026-09-30/taobao/商品图片/01_[演示]_超自然行动组摸_主图.jpeg", "2026-09-30/taobao/商品图片/01_【現貨】超自然行動組_怪_主图.png", "2026-09-30/taobao/商品图片/01_尋寶鼠端遊尋寶鼠手遊尋寶_主图.jpg", "2026-09-30/taobao/商品图片/02_[演示]_超自然行动组摸_主图.jpeg", "2026-09-30/taobao/商品图片/02_正版卡遊超自然行動組卡片_主图.png", "2026-09-30/taobao/商品图片/02_蛋仔派對驚魂尋寶隊陪玩護_主图.png", "2026-09-30/taobao/商品图片/03_[演示]_超自然行动组摸_主图.jpeg", "2026-09-30/taobao/商品图片/03_第五人格摸金陪加頁手記代_主图.jpg", "2026-09-30/taobao/商品图片/03_超自然行動組剷剷幣號初始_主图.png", "2026-09-30/taobao/商品图片/04_[演示]_超自然行动组陪_主图.jpeg", "2026-09-30/taobao/商品图片/04_【自動充值】超自然行動組_主图.png", "2026-09-30/taobao/商品图片/04_第五人格摸金陪加頁手記陪_主图.jpg", "2026-09-30/taobao/商品图片/05_[演示]_超自然行动组陪_主图.jpeg", "2026-09-30/taobao/商品图片/05_超自然行動組剷剷號資源號_主图.jpg", "2026-09-30/taobao/商品图片/05_超自然陪玩牽手開關抓怪摸_主图.jpg", "2026-09-30/taobao/商品图片/06_[演示]_超自然行动组陪_主图.jpeg", "2026-09-30/taobao/商品图片/06_蛋仔摸金驚魂尋寶隊護航陪_主图.png", "2026-09-30/taobao/商品图片/06_超自然行動組金磚代充特權_主图.jpg", "2026-09-30/taobao/商品图片/07_[演示]_摸金陪玩_同行_主图.jpeg", "2026-09-30/taobao/商品图片/07_蛋仔派對驚魂尋寶隊怪蛋瘋_主图.png", "2026-09-30/taobao/商品图片/07_超自然行動組剷剷幣初始號_主图.jpg", "2026-09-30/taobao/商品图片/08_[演示]_摸金陪玩_同行_主图.jpeg", "2026-09-30/taobao/商品图片/08_第五人格加頁手記摸金護航_主图.jpg", "2026-09-30/taobao/商品图片/08_超自然行動組1億剷剷號資_主图.jpg", "2026-09-30/taobao/商品图片/09_[演示]_摸金陪玩_同行_主图.jpeg", "2026-09-30/taobao/商品图片/09_【自動充值】超自然行動組_主图.png", "2026-09-30/taobao/商品图片/09_第五人格加頁手記陪玩護航_主图.jpg", "2026-09-30/taobao/商品图片/10_[演示]_超自然行动组__主图.jpeg", "2026-09-30/taobao/商品图片/10_永劫無間陪玩百強代練摸金_主图.jpg", "2026-09-30/taobao/商品图片/10_超自然行動組金磚代充_3_主图.png", "2026-09-30/taobao/商品图片/11_蛋仔派對陪玩巔峯摸金驚魂_主图.jpg", "2026-09-30/taobao/商品图片/11_超自然行動組剷剷幣號剷剷_主图.png", "2026-09-30/taobao/商品图片/12_【自動充值】超自然行動組_主图.png", "2026-09-30/taobao/商品图片/12_超自然行動組陪玩新地圖雲_主图.jpg", "2026-09-30/taobao/商品图片/13_第五人格加頁手記陪玩護航_主图.jpg", "2026-09-30/taobao/商品图片/13_超自然行動組剷剷幣號10_主图.jpg", "2026-09-30/taobao/商品图片/14_【自動充值】超自然行動組_主图.png", "2026-09-30/taobao/商品图片/14_蛋仔派對驚魂尋寶隊摸金陪_主图.jpg", "2026-09-30/taobao/商品图片/15_超自然行動組科技輔助腳本_主图.png", "2026-09-30/taobao/商品图片/15_超自然陪玩摸金娛樂技術護_主图.jpg", "2026-09-30/xianyu/商品图片/01_[演示]_闲鱼_超自然行_主图.jpeg", "2026-09-30/xianyu/商品图片/02_[演示]_闲鱼_超自然行_主图.jpeg", "2026-09-30/xianyu/商品图片/03_[演示]_闲鱼_超自然行_主图.jpeg", "2026-09-30/xianyu/商品图片/04_[演示]_闲鱼_超自然行_主图.jpeg", "2026-09-30/xianyu/商品图片/05_[演示]_闲鱼_超自然行_主图.jpeg", "2026-09-30/xianyu/商品图片/06_[演示]_闲鱼_超自然行_主图.jpeg", "2026-09-30/xianyu/商品图片/07_[演示]_闲鱼_摸金陪玩_主图.jpeg", "2026-09-30/xianyu/商品图片/08_[演示]_闲鱼_摸金陪玩_主图.jpeg", "2026-09-30/xianyu/商品图片/09_[演示]_闲鱼_摸金陪玩_主图.jpeg", "2026-09-30/xianyu/商品图片/10_[演示]_闲鱼_超自然摸_主图.jpeg"], "数据文件": ["2026-09-30/taobao/数据/data_taobao_search_v2.json", "2026-09-30/taobao/数据/data_taobao_search_v2.latest.json", "2026-09-30/xianyu/数据/data_xianyu_detail.json", "2026-09-30/xianyu/数据/data_xianyu_detail.latest.json"], "详情卡片": ["2026-09-30/xianyu/详情卡片/详情卡片1.png", "2026-09-30/xianyu/详情卡片/详情卡片10.png", "2026-09-30/xianyu/详情卡片/详情卡片2.png", "2026-09-30/xianyu/详情卡片/详情卡片3.png", "2026-09-30/xianyu/详情卡片/详情卡片4.png", "2026-09-30/xianyu/详情卡片/详情卡片5.png", "2026-09-30/xianyu/详情卡片/详情卡片6.png", "2026-09-30/xianyu/详情卡片/详情卡片7.png", "2026-09-30/xianyu/详情卡片/详情卡片8.png", "2026-09-30/xianyu/详情卡片/详情卡片9.png"], "失败记录": ["2026-09-30/失败记录/失败原因说明-2026-09-30.md"]}}];
+var STAT={"date": "2026-09-30", "generated": 67, "success": 67, "failed": 0, "taobao": 15, "xianyu": 15, "demo": false};
+var LIST=DATA.slice();
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function platformOf(f){
+  if(String(f).indexOf('/taobao/')>-1)return '淘宝';
+  if(String(f).indexOf('/xianyu/')>-1)return '闲鱼';
+  return '系统';
+}
+/* ------ 概览 ------ */
+(function(){
+  $('ov_date').textContent='统计日期：'+STAT.date+'（北京时间）';
+  $('ov_tb').textContent=STAT.taobao+' 件';
+  $('ov_xy').textContent=STAT.xianyu+' 件';
+  $('ov_gen').textContent=STAT.generated+' 个';
+  $('ov_ok').textContent=STAT.success+' / '+STAT.failed;
+  $('ov_st').textContent=STAT.demo?'（演示数据）':'已完成';
+  $('ov_src').textContent=STAT.demo?'演示':'Apify 真实采集';
+  $('ov_stats').innerHTML=
+    '<div class="stat"><div class="num t">'+STAT.taobao+'</div><div class="lab">淘宝商品</div></div>'+
+    '<div class="stat"><div class="num x">'+STAT.xianyu+'</div><div class="lab">闲鱼商品</div></div>'+
+    '<div class="stat"><div class="num g">'+STAT.success+'</div><div class="lab">成功文件</div></div>';
+})();
+/* ------ 今日爆品 ------ */
+function renderList(){
+  $('grid').innerHTML='';
+  $('empty').style.display=LIST.length?'none':'block';
+  LIST.forEach(function(it,i){
+    var pic=it.img
+      ?'<img src="'+it.img+'" alt="" loading="lazy">'
+      :'<div>虚拟商品 · 无图</div>';
+    var bg=it.platform==='淘宝'?'var(--tb)':'#1b6b4f';
+    var tierline='';
+    if(it.platform==='淘宝' && (it.tiers||[]).length){
+      var first=it.tiers[0];
+      tierline='<div class="tierline">¥'+first+'起 · 共'+it.tiers.length+'档</div>';
+    }
+    $('grid').insertAdjacentHTML('beforeend',
+      '<div class="card" data-i="'+i+'">'+
+      '<div class="pic">'+pic+'<span class="plat" style="background:'+bg+'">'+it.platform+'</span></div>'+
+      '<div class="cinfo"><div class="ctitle">'+esc(it.title)+'</div>'+
+      '<div class="cprice"><span class="y">￥</span>'+esc(it.price)+'</div>'+
+      tierline+
+      '<div class="cshop">'+esc(it.shop||'')+'</div></div></div>');
+  });
+}
+$('grid').addEventListener('click',function(e){
+  var c=e.target.closest('.card');if(!c)return;
+  openD(DATA.indexOf(LIST[+c.dataset.i]));
+});
+$('tabs').addEventListener('click',function(e){
+  var t=e.target.closest('.tab');if(!t)return;
+  document.querySelectorAll('#tabs .tab').forEach(function(x){x.classList.remove('on')});
+  t.classList.add('on');
+  var f=t.dataset.f;
+  LIST=f==='all'?DATA.slice():DATA.filter(function(x){return x.platform===f});
+  renderList();
+});
+/* ------ 归档（按天整理）------ */
+(function(){
+  if(!DAYS || !DAYS.length){$('archive-day').innerHTML='<div class="empty" style="display:block">暂无归档</div>';return;}
+  var CLabel={'PPT报告':'📊 PPT 报告','商品图片':'🖼️ 商品图片','详情卡片':'🃏 详情卡片','失败记录':'📛 失败记录','数据文件':'📄 数据文件'};
+  DAYS.forEach(function(day){
+    var card=document.createElement('div');card.className='daycard';
+    var total=0;day.groups && Object.keys(day.groups).forEach(function(c){total+=day.groups[c].length;});
+    var header='<div class="dt"><span>📅 '+day.date+'</span><span class="cnt">'+total+' 个文件</span></div>'+
+      '<div class="dsub">淘宝 + 闲鱼 · 自动采集归档</div>';
+    var body='';
+    Object.keys(CLabel).forEach(function(cat){
+      var arr=(day.groups&&day.groups[cat])||[];if(!arr.length)return;
+      body+='<div class="ah">'+CLabel[cat]+'（'+arr.length+'）</div>';
+      arr.forEach(function(f){
+        var name=String(f).split('/').pop();
+        body+='<div class="afile"><div class="nm">'+esc(name)+'</div>'+
+          '<div class="meta">['+platformOf(f)+'] · '+esc(f)+'</div></div>';
+      });
+    });
+    card.innerHTML=header+body;
+    $('archive-day').appendChild(card);
+  });
+})();
+/* ------ 抽屉 ------ */
+function tierHtml(it){
+  if(it.platform!=='淘宝')return '';
+  var t=(it.tiers||[]);if(!t.length)return '';
+  var chips=t.map(function(v){
+    return '<div class="tier"><span class="lab">档位</span><span class="val">￥'+v+'</span></div>';
+  }).join('');
+  return '<div class="tiers">'+chips+
+    '<div class="tier note">⚠️ 档位价格取自商品标题，为真实信息；具体每个款式的最终价格以详情页为准（淘宝详情需登录核验）。</div></div>';
+}
+function openD(idx){
+  var it=DATA[idx];if(!it)return;
+  var ps=(it.points||[]).map(function(s){return '<div class="drow"><span class="k">卖点</span><span class="v">'+esc(s)+'</span></div>'}).join('');
+  var big=it.img?'<img src="'+it.img+'">':'<div style="padding:60px 0;color:#aaa;font-size:13px">虚拟商品 · 无商品图</div>';
+  $('dbody').innerHTML=
+    '<div class="pbig">'+big+'</div>'+
+    '<div class="dtitle">'+esc(it.title)+'</div>'+
+    '<div class="dprice"><span class="y">￥</span>'+esc(it.price)+'</div>'+
+    tierHtml(it)+
+    '<div class="drow"><span class="k">平台</span><span class="v">'+it.platform+'</span></div>'+
+    '<div class="drow"><span class="k">店铺</span><span class="v">'+esc(it.shop||'-')+'</span></div>'+
+    '<div class="drow"><span class="k">来源</span><span class="v">'+esc(it.src||'真实采集')+'</span></div>'+
+    '<div class="drow"><span class="k">城市</span><span class="v">'+esc(it.city||'-')+'</span></div>'+ps+
+    '<a class="dbtn" href="'+esc(it.url)+'" target="_blank" rel="noopener">查看原商品</a>';
+  $('drawer').classList.add('show');
+}
+function closeD(){$('drawer').classList.remove('show');}
+$('drawer').addEventListener('click',function(e){if(e.target===this)closeD();});
+/* ------ 底部导航 ------ */
+document.querySelectorAll('.nav .ni').forEach(function(n){
+  n.addEventListener('click',function(){
+    document.querySelectorAll('.nav .ni').forEach(function(x){x.classList.remove('on')});
+    n.classList.add('on');
+    document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on')});
+    $(n.dataset.tab).classList.add('on');
+    window.scrollTo(0,0);
+  });
+});
+renderList();
+</script>
+</body>
+</html>
