@@ -15,6 +15,12 @@
     "taobao": ["超自然行动组摸金陪", "摸金陪玩"],
     "xianyu": ["超自然行动组摸金陪", "超自然行动组"]
   },
+  "data_source": {
+    "mode": "free_web",
+    "hint": "免登录网页采集会被淘宝/闲鱼登录墙和JS校验拦截，通常拿不到真实数据。要拿真实数据：1) 在宿主机浏览器登录后，把登录Cookie填到 COOKIES 环境变量；或 2) 购买第三方电商数据API，把返回数据按 fetch/items 结构注入（见 README）。free_web 模式下抓不到会如实标记「待核验」，绝不编造。",
+    "cookies_env": "COOKIES",
+    "enabled_web_probe": true
+  },
   "output": {
     "archive_root": "archive",
     "max_images_per_product": 1,

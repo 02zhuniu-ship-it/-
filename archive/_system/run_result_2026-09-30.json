@@ -1,11 +1,11 @@
 {
   "date": "2026-09-30",
-  "demo": false,
+  "demo": true,
   "task_name": "每日淘宝+闲鱼竞品分析",
   "generated": 37,
   "success": 37,
   "failed": 0,
   "bad_files": [],
   "failures": [],
-  "ts": "2026-09-30T10:55:49.078436"
+  "ts": "2026-09-30T10:58:18.811457"
 }

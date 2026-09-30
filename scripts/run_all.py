@@ -44,6 +44,21 @@ def main():
         if r.returncode != 0:
             logger.error(f"[{plat}] 采集脚本异常: {r.stderr[-500:]}")
             failures.append({"step": f"{plat}采集", "reason": "脚本异常"})
+        # 读取采集脚本产出的失败/抓取记录，合并进统一失败列表
+        raw_f = os.path.join(SCRIPT_DIR, f"_raw_{plat}_{date}.json")
+        if os.path.exists(raw_f):
+            raw = common.load_json(raw_f, {})
+            for f in raw.get("fetches", []) or []:
+                if f.get("is_demo"):
+                    continue
+                failures.append(f)
+            # 真实采集返回0个且不是demo → 记录"未获取到任何真实商品"
+            if not demo and not raw.get("items"):
+                failures.append({
+                    "step": f"{plat}采集", "keyword": "全部",
+                    "field": "商品列表", "reason": "免登录真实采集被登录/风控墙拦截，未获取到任何商品",
+                    "tried": "多关键词搜索公开页面/接口", "status": "失败",
+                })
 
     # 2) 生成数据文件 + PPT + 卡片
     for plat in ("taobao", "xianyu"):
