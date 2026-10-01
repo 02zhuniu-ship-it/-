@@ -553,5 +553,30 @@
     "path": "2026-10-01/xianyu/数据/data_xianyu_detail.latest.json",
     "size": 33118,
     "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "80d687fd81d8edb2a4ec421bad05a105d746a395bd5f111db35994b3dccc764c": {
+    "path": "2026-10-02/taobao/PPT报告/淘宝同行爆款分析-2026-10-02.pptx",
+    "size": 46601,
+    "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "d4c55d871905d1b39d998958e6b417c7c3d42874be6460b3637ea6d1f112fa7f": {
+    "path": "2026-10-02/taobao/数据/data_taobao_search_v2.json",
+    "size": 29063,
+    "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "e84b68dd204a1b4405a6586a66011d09370e046b4b152fb09e6d4d27980b34f4": {
+    "path": "2026-10-02/taobao/商品图片/14_蘋果超自然行動組輔助科技_主图.jpg",
+    "size": 246872,
+    "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "8ecf2e0a5d09e4ec45d92032203e88978d0beee51932c85d95e021e3bfbf90f0": {
+    "path": "2026-10-02/xianyu/PPT报告/闲鱼同行爆款分析-2026-10-02.pptx",
+    "size": 49047,
+    "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "0cb024c113caa6f9a81adc0ba566d78805e0d72dcaaa186627c6e0d5c5257819": {
+    "path": "2026-10-02/xianyu/数据/data_xianyu_detail.latest.json",
+    "size": 35473,
+    "task": "每日淘宝+闲鱼竞品分析"
   }
 }
