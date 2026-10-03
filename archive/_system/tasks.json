@@ -2207,5 +2207,112 @@
     "bad_files": [],
     "failures": [],
     "ts": "2026-10-03T00:23:14.849374"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-10-04",
+    "project": "",
+    "platform": "taobao",
+    "type": "PPT报告",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 0,
+    "failed": 0,
+    "files": [
+      "2026-10-04/taobao/PPT报告/淘宝同行爆款分析-2026-10-04.pptx"
+    ],
+    "failed_detail": [],
+    "ts": "2026-10-04T04:06:54.316958"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-10-04",
+    "project": "",
+    "platform": "taobao",
+    "type": "数据",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 1,
+    "failed": 0,
+    "files": [
+      "2026-10-04/taobao/数据/data_taobao_search_v2.json",
+      "2026-10-04/taobao/数据/data_taobao_search_v2.latest.json"
+    ],
+    "failed_detail": [],
+    "ts": "2026-10-04T04:06:54.322289"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-10-04",
+    "project": "",
+    "platform": "taobao",
+    "type": "商品图片",
+    "source": "auto",
+    "uploaded": 0,
+    "existed": 15,
+    "failed": 0,
+    "files": [
+      "2026-10-04/taobao/商品图片/11_【自動充值】超自然行動組_主图.png",
+      "2026-10-04/taobao/商品图片/05_超自然行動組剷剷號資源號_主图.jpg",
+      "2026-10-04/taobao/商品图片/06_超自然行動組金磚代充特權_主图.jpg",
+      "2026-10-04/taobao/商品图片/13_超自然行動組剷剷幣號10_主图.jpg",
+      "2026-10-04/taobao/商品图片/08_超自然行動組1億剷剷號資_主图.jpg",
+      "2026-10-04/taobao/商品图片/12_超自然行動組剷剷幣號剷剷_主图.png",
+      "2026-10-04/taobao/商品图片/02_【現貨】超自然行動組_怪_主图.png",
+      "2026-10-04/taobao/商品图片/04_【自動充值】超自然行動組_主图.png",
+      "2026-10-04/taobao/商品图片/15_蘋果超自然行動組輔助科技_主图.jpg",
+      "2026-10-04/taobao/商品图片/03_超自然行動組剷剷幣號初始_主图.png",
+      "2026-10-04/taobao/商品图片/14_【自動充值】超自然行動組_主图.png",
+      "2026-10-04/taobao/商品图片/07_超自然行動組剷剷幣初始號_主图.jpg",
+      "2026-10-04/taobao/商品图片/10_超自然行動組金磚代充_3_主图.png",
+      "2026-10-04/taobao/商品图片/01_正版卡遊超自然行動組卡片_主图.png",
+      "2026-10-04/taobao/商品图片/09_【自動充值】超自然行動組_主图.png"
+    ],
+    "failed_detail": [],
+    "ts": "2026-10-04T04:06:54.338031"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-10-04",
+    "project": "",
+    "platform": "xianyu",
+    "type": "PPT报告",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 0,
+    "failed": 0,
+    "files": [
+      "2026-10-04/xianyu/PPT报告/闲鱼同行爆款分析-2026-10-04.pptx"
+    ],
+    "failed_detail": [],
+    "ts": "2026-10-04T04:06:54.343080"
+  },
+  {
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "date": "2026-10-04",
+    "project": "",
+    "platform": "xianyu",
+    "type": "数据",
+    "source": "auto",
+    "uploaded": 1,
+    "existed": 1,
+    "failed": 0,
+    "files": [
+      "2026-10-04/xianyu/数据/data_xianyu_detail.latest.json",
+      "2026-10-04/xianyu/数据/data_xianyu_detail.json"
+    ],
+    "failed_detail": [],
+    "ts": "2026-10-04T04:06:54.348450"
+  },
+  {
+    "date": "2026-10-04",
+    "demo": false,
+    "task_name": "每日淘宝+闲鱼竞品分析",
+    "generated": 22,
+    "success": 22,
+    "failed": 0,
+    "bad_files": [],
+    "failures": [],
+    "ts": "2026-10-04T04:06:54.351550"
   }
 ]
