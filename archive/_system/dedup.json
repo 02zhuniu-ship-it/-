@@ -718,5 +718,30 @@
     "path": "2026-10-09/xianyu/数据/data_xianyu_detail.latest.json",
     "size": 33938,
     "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "275282dd1821dfa6f49c69019284b66191f71025ad9b507b4fe3a2e25ca595a5": {
+    "path": "2026-10-10/taobao/PPT报告/淘宝同行爆款分析-2026-10-10.pptx",
+    "size": 46598,
+    "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "461ffd5949418a5bf4381eeacf764bb40e097b319aead52c37ec65983d7d9ea0": {
+    "path": "2026-10-10/taobao/数据/data_taobao_search_v2.json",
+    "size": 29040,
+    "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "0eadf0bd94c67f122336494cafadec300374bcca537f6f8a1e41faf5561ca21b": {
+    "path": "2026-10-10/taobao/商品图片/15_超自然行動組手遊蟲谷龍宮_主图.jpg",
+    "size": 174044,
+    "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "de2ace22466df492b968198afefa6de979c5a60189450bd266a5a3593e09832d": {
+    "path": "2026-10-10/xianyu/PPT报告/闲鱼同行爆款分析-2026-10-10.pptx",
+    "size": 48957,
+    "task": "每日淘宝+闲鱼竞品分析"
+  },
+  "d575993422fad231ab333629b82a4ea7d2b928f214658c2793a435cf45b6c047": {
+    "path": "2026-10-10/xianyu/数据/data_xianyu_detail.latest.json",
+    "size": 35067,
+    "task": "每日淘宝+闲鱼竞品分析"
   }
 }
